@@ -17,6 +17,16 @@ public class Main {
 		System.out.println("Number of items: " + numberOfItems);
 		System.out.println("Bin Maximum Capacity: " + binMaxCapacity);
 		System.out.println("Items: " + items);
+		
+		//Comeco da contagem de tempo do algoritmo
+		long start = System.currentTimeMillis();
+		
+		//Chamada do algoritmo
+		
+		//Final da contagem de tempo do algoritmo
+		long elapsedTime = System.currentTimeMillis() - start;
+		//System.out.println("Number of bins = " + numberOfBins);
+		System.out.println("Total time: " + elapsedTime/1000.0 + "s");
     }
    
     // Read files by path and separate number of items, bin max capacity and items
