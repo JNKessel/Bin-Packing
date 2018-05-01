@@ -9,7 +9,7 @@ import java.util.List;
 public class Main {
 	private static String numberOfItems;
 	private static String binMaxCapacity;
-	private static List<String> items = new ArrayList<String>();;
+	public static List<Integer> items = new ArrayList<Integer>();;
 	
     public static void main(String[] args) {
         System.out.println("Starting Bin Packing Problem");
@@ -37,7 +37,7 @@ public class Main {
     	    binMaxCapacity = br.readLine();
     	    String item = br.readLine();
     	    while (item != null) {
-    	    	items.add(item);
+    	    	items.add(Integer.parseInt(item));
     	        item = br.readLine();
     	    }
     	    br.close();

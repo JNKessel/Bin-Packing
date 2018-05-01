@@ -1,10 +1,9 @@
 package Individual;
+import Main.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import Main.Main;
 
 public class Chromosome {
 	
@@ -14,7 +13,7 @@ public class Chromosome {
 		
 		int i = 0;
 		
-		ArrayList<String> itemsClone = (ArrayList<String>) (((ArrayList<String>) Main.items).clone());
+		List<Integer> itemsClone = new ArrayList<Integer>(Main.items);
 		
 		Collections.shuffle(itemsClone);
 		
