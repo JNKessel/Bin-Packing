@@ -125,10 +125,21 @@ public class GeneticAlgorithm {
 	private List<Individuo> generateChildren(List<List<Individuo>> parents) {
 		List<Individuo> children = new ArrayList<Individuo>();
 		
-		// Recombinar pais para gerar filhos
-		// TODO: CrossOver dos pais adicionando os filhos gerados a lista final
-		
-		
+		// Para todos os pares de pais
+		for (List<Individuo> pair_parents: parents) {
+			if(pair_parents.size() != 2) {
+				System.out.println("Error in generateChildren: pair_parents doesnt have 2 parents");
+				break;
+			}
+			// Recombinar pais
+			Individuo parent1 = pair_parents.get(0);
+			Individuo parent2 = pair_parents.get(1);
+			List<Individuo> pair_children = parent1.generateChildren(parent2);
+			// Adicionar os filhos gerados a lista final de filhos
+			for(Individuo child: pair_children) {
+				children.add(child);
+			}
+		}
 		
 		return children;
 	}

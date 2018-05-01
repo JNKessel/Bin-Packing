@@ -16,7 +16,7 @@ public class Individuo {
 	}
 
 	
-	public List<Individuo> gerarFilhos (Individuo mae) {
+	public List<Individuo> generateChildren (Individuo mae) {
 		List<Chromosome> newChromosomes = chromosome.recombineChromossomes(mae.chromosome);
 		List<Individuo> newIndividuals = new ArrayList<Individuo>();
 		for (Chromosome chrom: newChromosomes) {
