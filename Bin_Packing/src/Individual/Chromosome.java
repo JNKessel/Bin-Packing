@@ -1,7 +1,10 @@
+package Individual;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import Main.Main;
 
 public class Chromosome {
 	

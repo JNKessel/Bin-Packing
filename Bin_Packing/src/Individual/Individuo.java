@@ -1,3 +1,4 @@
+package Individual;
 
 public class Individuo {
 	
