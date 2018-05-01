@@ -1,6 +1,7 @@
 package GeneticAlgorithm;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import Individual.Individuo;
@@ -13,6 +14,7 @@ public class GeneticAlgorithm {
 	private List<Integer> items;
 	private Integer binMaxCapacity;
 	private Integer numberOfItems;
+	private Integer populationSize = 10; // Par
 	
 	public GeneticAlgorithm() {
 	}
@@ -23,6 +25,11 @@ public class GeneticAlgorithm {
 		this.items = new ArrayList<Integer>(initial_items);
 		this.binMaxCapacity = binMaxCapacity;
 		this.numberOfItems = numberOfItems;
+		
+		// Garantir que o tamanho da população não é maior que o número total de soluções (Fatorial(numberOfItems))
+		if(numberOfItems < 4) { // 4 é o menor número para o qual Fatorial(numero) > 10 (tamanho da populacao)
+			populationSize = Fatorial(numberOfItems);
+		}
 
 		List<Individuo> families;
 		
@@ -42,8 +49,35 @@ public class GeneticAlgorithm {
 	}
 	
 	private List<Individuo> firstGeneration(List<Integer> initial_items) {
-		// TODO: Gerar populacao inicial
+		List<Integer> initial_items_copy = new ArrayList<Integer>(initial_items);
 		List<Individuo> initial_population = new ArrayList<Individuo>();
+
+		// Gerar um individuo com ordenacao natral
+		initial_population.add(new Individuo(initial_items_copy));
+		
+		// Gerar um individuo com ordenacao decrescente
+		Collections.sort(initial_items_copy, Collections.reverseOrder());
+		Individuo novo = new Individuo(initial_items_copy);
+		if(!initial_population.contains(novo)) {
+			initial_population.add(novo);			
+		}
+		
+		// Gerar um individuo com ordenacao crescente
+		Collections.sort(initial_items_copy);
+		novo = new Individuo(initial_items_copy);
+		if(!initial_population.contains(novo)) {
+			initial_population.add(novo);			
+		}
+
+		// Gerar o resto dos individuos com ordenacao aleatoria
+		while(initial_population.size() != populationSize) {
+			Collections.shuffle(initial_items_copy);
+			novo = new Individuo(initial_items_copy);
+			if(!initial_population.contains(novo)) {
+				initial_population.add(novo);
+			}
+		}
+		
 		return initial_population;
 	}
 	
@@ -91,5 +125,32 @@ public class GeneticAlgorithm {
 		List<Individuo> new_population = new ArrayList<Individuo>();
 		return new_population;
 	}
+	
+	// Fatorial
+	public Integer Fatorial(int num) {
+		if(num <= 1) {
+			return 1;
+		}
+		else {
+			return Fatorial((num - 1) * num);
+		}
+	}
+	
+    public static void main(String[] args) {
+    	System.out.println("Hello There!");
+    	List<Integer> list = new ArrayList<Integer>();
+    	list.add(7);
+    	list.add(1);
+    	list.add(10);
+    	list.add(2);
+    	list.add(6);
+//    	Collections.sort(list, Collections.reverseOrder());
+    	Collections.shuffle(list);
+    	System.out.println(list);
+    	Collections.shuffle(list);
+    	System.out.println(list);
+    	Collections.shuffle(list);
+    	System.out.println(list);
+    }
 
 }

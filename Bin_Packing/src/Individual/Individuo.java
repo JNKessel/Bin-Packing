@@ -1,11 +1,13 @@
 package Individual;
 
+import java.util.List;
+
 public class Individuo {
 	
 	private Chromosome chromosome;
 	private int fitness;
 	
-	public Individuo(){
+	public Individuo(List<Integer> genes){
 		
 		chromosome = new Chromosome();
 		
