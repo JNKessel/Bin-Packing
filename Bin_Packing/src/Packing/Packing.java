@@ -1,14 +1,15 @@
 package Packing;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Packing {
 
 	
-	public static int FirstFit(int itens[], int numberOfItens, int capacidade) {
+	public static int FirstFit(List<Integer> itens, int numberOfItens, int capacidade) {
 
 		int NumBins = 0;
-		int BinFreeSpace[] = new int[numberOfItens];
-		Arrays.fill(BinFreeSpace, capacidade);
+		List<Integer> BinFreeSpace = new ArrayList<Integer>(Collections.nCopies(numberOfItens, capacidade)); // numberOfItens
 
 		for (int i = 0; i < numberOfItens; i++) {
 
@@ -17,8 +18,8 @@ public class Packing {
 			for (j = 0; j < NumBins; j++) {
 
 				// Insere o item[i] no Bin[j], se houver espaco
-				if (BinFreeSpace[j] >= itens[i]) {
-					BinFreeSpace[j] -= itens[i];
+				if (BinFreeSpace.get(j) >= itens.get(i)) {
+					BinFreeSpace.set(j, BinFreeSpace.get(j) - itens.get(i));
 					break;
 				}
 			}
@@ -26,7 +27,7 @@ public class Packing {
 			// Se nao houver onde inserir o item[i], acrescenta mais um bin e o insere
 			if (j == NumBins) {
 				NumBins++;
-				BinFreeSpace[NumBins] -= itens[i];
+				BinFreeSpace.set(NumBins, BinFreeSpace.get(NumBins) - itens.get(i));
 			}
 		}
 		
@@ -34,21 +35,21 @@ public class Packing {
 		return (NumBins);
 	}
 
-	public static int NextFit(int itens[], int numberOfItens, int capacidade) {
+	public static int NextFit(List<Integer> itens, int numberOfItens, int capacidade) {
 		int NumBins = 0;
 		int BinFreeSpace = capacidade;
 
 		for (int i = 0; i < numberOfItens; i++) {
 
 			// Se houver espaco, insere o item[i] no ultimo Bin alocado
-			if (BinFreeSpace >= itens[i]) {
-				BinFreeSpace -= itens[i];
+			if (BinFreeSpace >= itens.get(i)) {
+				BinFreeSpace -= itens.get(i);
 			}
 
-			// Se n�o houver onde inserir o item[i], acrescenta mais um bin e o insere
+			// Se nao houver onde inserir o item[i], acrescenta mais um bin e o insere
 			else {
 				NumBins++;
-				BinFreeSpace = capacidade - itens[i];
+				BinFreeSpace = capacidade - itens.get(i);
 			}
 		}
 		
