@@ -21,9 +21,15 @@ public class Chromosome {
 		return newChromossomes12;
 	}
 	
-	public void sufferMutation() {
-		// TODO: Implement mutation by swap, 2-opt or another method
-	
+	public List<Integer> sufferMutation(int type) {
+		
+		if(type == 1){
+			return (Mutation.Realocate((ArrayList<Integer>)chromosome));
+		}else if(type == 2){
+			return (Mutation.Swap((ArrayList<Integer>)chromosome));
+		}else{
+			return (Mutation.Two_Opt((ArrayList<Integer>)chromosome));
+		}
 	}
 	
 	public List<Integer> getChromossomeList () {

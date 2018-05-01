@@ -15,8 +15,7 @@ public class Individuo {
 		chromosome = chrom;
 	}
 
-	
-	public List<Individuo> generateChildren (Individuo mae) {
+	public List<Individuo> gerarFilhos (Individuo mae) {
 		List<Chromosome> newChromosomes = chromosome.recombineChromossomes(mae.chromosome);
 		List<Individuo> newIndividuals = new ArrayList<Individuo>();
 		for (Chromosome chrom: newChromosomes) {
@@ -27,6 +26,10 @@ public class Individuo {
 	
 	public List<Integer> getChromosome () {
 		return chromosome.getChromossomeList();
+	}
+	
+	public List<Integer> mutation (int type) {
+		return chromosome.sufferMutation(type);
 	}
 	
 }
