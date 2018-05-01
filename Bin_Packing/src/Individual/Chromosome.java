@@ -1,5 +1,6 @@
 package Individual;
 import Main.*;
+import CrossOvers.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,34 +8,24 @@ import java.util.List;
 
 public class Chromosome {
 	
-	private int chromosome[] = new int[Main.items.size()];
+	private List<Integer> chromosome;
+	private CrossOvers crossOverMethods = new CrossOvers();
 	
-	public Chromosome(){
-		
-		int i = 0;
-		
-		List<Integer> itemsClone = new ArrayList<Integer>(Main.items);
-		
-		Collections.shuffle(itemsClone);
-		
-		for(int item: itemsClone){
-			chromosome[i] = item;
-		    i++;
-		}	
+	public Chromosome(List<Integer> genes) {
+		chromosome = new ArrayList<Integer>(genes);
 	}
 	
-	public Chromosome(Chromosome chromPai, Chromosome chromMae){
-		
-		recombinacao(chromPai, chromMae);
-		mutacao();
-		
+	public List<Chromosome> recombineChromossomes(Chromosome chromMae) {
+		crossOverMethods.ParcialmenteMapeado(chromosome, chromMae.chromosome);
+		Chromosome newChromossome1 = new Chromosome(crossOverMethods.getF1());
+		Chromosome newChromossome2 = new Chromosome(crossOverMethods.getF2());
+		List<Chromosome> newChromossomes12 = new ArrayList<Chromosome>();
+		newChromossomes12.add(newChromossome1);
+		newChromossomes12.add(newChromossome2);
+		return newChromossomes12;
 	}
 	
-	private void recombinacao(Chromosome chromPai, Chromosome chromMae){
-		
-	}
-	
-	private void mutacao(){
-		
+	public void sufferMutation() {
+		// TODO: Implement mutation by swap, 2-opt or another method
 	}
 }

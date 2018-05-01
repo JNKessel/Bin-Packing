@@ -124,6 +124,8 @@ public class GeneticAlgorithm {
 	private List<Individuo> generateChildren(List<List<Individuo>> parents) {
 		// Recombinar pais para gerar filhos
 		// TODO: CrossOver dos pais adicionando os filhos gerados a lista final
+		
+		
 		List<Individuo> children = new ArrayList<Individuo>();
 		return children;
 	}
