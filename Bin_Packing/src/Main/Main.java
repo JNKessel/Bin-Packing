@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-	private static String numberOfItems;
-	private static String binMaxCapacity;
+	public static Integer numberOfItems;
+	public static Integer binMaxCapacity;
 	public static List<Integer> items = new ArrayList<Integer>();;
 	
     public static void main(String[] args) {
@@ -33,8 +33,8 @@ public class Main {
     public static void readFile (String file_path) {
     	try {
     		BufferedReader br = new BufferedReader(new FileReader(file_path));
-    	    numberOfItems = br.readLine();
-    	    binMaxCapacity = br.readLine();
+    	    numberOfItems = Integer.parseInt(br.readLine());
+    	    binMaxCapacity = Integer.parseInt(br.readLine());
     	    String item = br.readLine();
     	    while (item != null) {
     	    	items.add(Integer.parseInt(item));
