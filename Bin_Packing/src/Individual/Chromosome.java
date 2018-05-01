@@ -1,9 +1,5 @@
 package Individual;
-import Main.*;
-import CrossOvers.*;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Chromosome {
@@ -27,5 +23,10 @@ public class Chromosome {
 	
 	public void sufferMutation() {
 		// TODO: Implement mutation by swap, 2-opt or another method
+	
+	}
+	
+	public List<Integer> getChromossomeList () {
+		return chromosome;
 	}
 }

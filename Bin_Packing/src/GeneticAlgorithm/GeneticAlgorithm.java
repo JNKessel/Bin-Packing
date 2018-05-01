@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import Individual.Individuo;
+import Packing.Packing;
 
 public class GeneticAlgorithm {
 	private Integer READY = 1;
@@ -161,23 +162,29 @@ public class GeneticAlgorithm {
 		}
 	}
 	
-    public static void main(String[] args) {
-    	System.out.println("Hello There!");
-    	List<Integer> list = new ArrayList<Integer>();
-    	list.add(7);
-    	list.add(1);
-    	list.add(10);
-    	list.add(2);
-    	list.add(6);
-    	
-    	while(list.size() != 0) {
-			Random random = new Random();
-			Integer parent = list.get(random.nextInt(list.size()));
-			list.remove(parent);
-			System.out.println(parent);
-			System.out.println(list);
-    	}
+	 private Integer calcFitness(Individuo i) {
+		 Integer fitness = Packing.FirstFit(i.getChromosome(), i.getChromosome().size(), binMaxCapacity);
+		 return fitness;
+	 }
 
-    }
+	
+//    public static void main(String[] args) {
+//    	System.out.println("Hello There!");
+//    	List<Integer> list = new ArrayList<Integer>();
+//    	list.add(7);
+//    	list.add(1);
+//    	list.add(10);
+//    	list.add(2);
+//    	list.add(6);
+//    	System.out.println(list);
+//    	System.out.println(list.get(0));
+//    	while(list.size() != 0) {
+//			Random random = new Random();
+//			Integer parent = list.get(random.nextInt(list.size()));
+//			list.remove(parent);
+//			System.out.println(parent);
+//			System.out.println(list);
+//    	}
+//    }
 
 }
