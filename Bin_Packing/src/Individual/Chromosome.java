@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Chromosome {
 	
-	private int chromosome[] = new int[Main.items.size()];
+	public int chromosome[] = new int[Main.items.size()];
 	
 	public Chromosome(){
 		
@@ -31,6 +31,8 @@ public class Chromosome {
 	}
 	
 	private void recombinacao(Chromosome chromPai, Chromosome chromMae){
+		
+		chromosome = CrossOvers.PMX(chromPai.chromosome, chromMae.chromosome);
 		
 	}
 	
