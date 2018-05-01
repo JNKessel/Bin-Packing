@@ -18,7 +18,7 @@ public class Mutation {
 		} while (r1 == r2);
 
 		// Garante que r1 será sempre o menor numero
-		if (r1 < r2) {
+		if (r1 > r2) {
 			aux = r1;
 			r1 = r2;
 			r2 = aux;
@@ -68,7 +68,7 @@ public class Mutation {
 		} while (r1 == r2);
 
 		// Garante que r1 será sempre o menor numero
-		if (r1 < r2) {
+		if (r1 > r2) {
 			aux = r1;
 			r1 = r2;
 			r2 = aux;
