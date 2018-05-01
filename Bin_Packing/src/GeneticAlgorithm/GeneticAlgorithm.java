@@ -14,15 +14,18 @@ public class GeneticAlgorithm {
 	private Integer binMaxCapacity;
 	private Integer numberOfItems;
 	
-	public GeneticAlgorithm(List<Integer> initial_items, Integer binMaxCapacity, Integer numberOfItems) {
+	public GeneticAlgorithm() {
+	}
+	
+	public Integer naturalSelection(List<Integer> initial_items, Integer binMaxCapacity, Integer numberOfItems) {
+		// Copy Initial Problem Variables
 		this.totalBins = numberOfItems;
 		this.items = new ArrayList<Integer>(initial_items);
 		this.binMaxCapacity = binMaxCapacity;
 		this.numberOfItems = numberOfItems;
-	}
-	
-	private Integer naturalSelection() {
+
 		List<Individuo> families;
+		
 		// Gera população inicial de individuos
 		List<Individuo> population = firstGeneration(this.items);
 		// Classificar geracao
