@@ -3,6 +3,7 @@ package GeneticAlgorithm;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import Individual.Individuo;
 
@@ -32,9 +33,10 @@ public class GeneticAlgorithm {
 		}
 
 		List<Individuo> families;
+		List<Individuo> population;
 		
 		// Gera população inicial de individuos
-		List<Individuo> population = firstGeneration(this.items);
+		population = firstGeneration(this.items);
 		// Classificar geracao
 		classifyGeneration(population);
 		while(terminal_condition == READY) {
@@ -92,10 +94,31 @@ public class GeneticAlgorithm {
 	}
 	
 	private List<List<Individuo>> selectParents(List<Individuo> old_population) {
-		// Selecionar pais
-		// TODO: Selecionar individuos dois a dois da populacao
+		List<Individuo> old_population_copy = new ArrayList<Individuo>(old_population);
 		List<List<Individuo>> parents = new ArrayList<List<Individuo>>();
+		
+		// Ate todos os pais serem selecionados
+		while(parents.size() != populationSize/2) {
+			// Selecionar individuos aleatorios para serem pais
+			Individuo parent1 = chooseRandomParent(old_population_copy);
+			Individuo parent2 = chooseRandomParent(old_population_copy);
+			// Adicionar eles como pais
+			List<Individuo> parents12 = new ArrayList<Individuo>();
+			parents12.add(parent1);
+			parents12.add(parent2);
+			parents.add(parents12);
+		}
+		
 		return parents;
+	}
+	
+	private Individuo chooseRandomParent(List<Individuo> old_population_copy) {
+		Random random = new Random();
+		// Escolhe aleatoriamente um individuo na lista para ser pai
+		Individuo parent = old_population_copy.get(random.nextInt(old_population_copy.size()));
+		// Retira ele da lista (evitar repeticoes de pais)
+		old_population_copy.remove(parent);
+		return parent;
 	}
 	
 	private List<Individuo> generateChildren(List<List<Individuo>> parents) {
@@ -144,13 +167,15 @@ public class GeneticAlgorithm {
     	list.add(10);
     	list.add(2);
     	list.add(6);
-//    	Collections.sort(list, Collections.reverseOrder());
-    	Collections.shuffle(list);
-    	System.out.println(list);
-    	Collections.shuffle(list);
-    	System.out.println(list);
-    	Collections.shuffle(list);
-    	System.out.println(list);
+    	
+    	while(list.size() != 0) {
+			Random random = new Random();
+			Integer parent = list.get(random.nextInt(list.size()));
+			list.remove(parent);
+			System.out.println(parent);
+			System.out.println(list);
+    	}
+
     }
 
 }
