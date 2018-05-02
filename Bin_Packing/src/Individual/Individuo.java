@@ -6,6 +6,8 @@ import java.util.List;
 public class Individuo {
 	
 	private Chromosome chromosome;
+	private static Integer fitness;
+	private static Boolean aprovado;
 	
 	public Individuo(List<Integer> genes){
 		chromosome = new Chromosome(genes);
@@ -29,4 +31,20 @@ public class Individuo {
 		return chromosome.getChromossomeList();
 	}
 	
+	public void setFitness(Integer fitness) {
+		Individuo.fitness = fitness;
+	}
+
+	public Integer getFitness() {
+		return Individuo.fitness;
+	}
+
+	public void setStatus(Boolean status) {
+		Individuo.aprovado = status;
+	}
+
+	public Boolean getStatus() {
+		return Individuo.aprovado;
+	}
+
 }
