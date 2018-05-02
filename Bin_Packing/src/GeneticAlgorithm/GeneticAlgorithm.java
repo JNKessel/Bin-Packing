@@ -18,10 +18,6 @@ public class GeneticAlgorithm {
 	private Integer numberOfItems;
 	private Integer populationSize = 10; // Par
 	
-	// PRIMEIRO COMMIT DO MARCELO
-	public GeneticAlgorithm() {
-	}
-	
 	public Integer naturalSelection(List<Integer> initial_items, Integer binMaxCapacity, Integer numberOfItems) {
 		// Copy Initial Problem Variables
 		this.totalBins = numberOfItems;
