@@ -18,6 +18,7 @@ public class GeneticAlgorithm {
 	private Integer numberOfItems;
 	private Integer populationSize = 10; // Par
 	
+	// PRIMEIRO COMMIT DO MARCELO
 	public GeneticAlgorithm() {
 	}
 	
