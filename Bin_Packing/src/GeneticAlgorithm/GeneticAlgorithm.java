@@ -343,8 +343,8 @@ public class GeneticAlgorithm {
 		}
 		generationsAverage = (generationsAverage + average) / 2;
 		// Avaliar melhor número de bins utilizado em todas as geracoes
-		System.out.println("Generations Best" + this.generationsBest);
-		System.out.println("Actual Best" + bestFitness);
+//		System.out.println("Generations Best" + this.generationsBest);
+//		System.out.println("Actual Best" + bestFitness);
 		if(bestFitness >= generationsBest) {
 			mutationChance += 0.1;
 			generationsWithoutImprovement += 1;
@@ -352,7 +352,7 @@ public class GeneticAlgorithm {
 			generationsWithoutImprovement = 0;
 			generationsBest = bestFitness;
 		}
-		System.out.println("without improvementt" + this.generationsWithoutImprovement);
+//		System.out.println("without improvementt" + this.generationsWithoutImprovement);
 		// Avaliar pior número de bins utilizado em todas as geracoes
 		if(worstFitness >= generationsWorst) {
 			mutationChance += 0.1;
