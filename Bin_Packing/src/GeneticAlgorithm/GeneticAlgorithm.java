@@ -390,10 +390,10 @@ public class GeneticAlgorithm {
 		 // Calcula o Fitness do individuo
 		 Integer fitness = null;
 		 if(type == 1) {
-			 fitness = Packing.FirstFit(i.getChromosome(), i.getChromosome().size(), binMaxCapacity);
+			 fitness = Packing.FirstFit_GN(i.getChromosome(), i.getChromosome().size(), binMaxCapacity);
 		 }
 		 else if(type == 2) {
-			 fitness = Packing.NextFit(i.getChromosome(), i.getChromosome().size(), binMaxCapacity);
+			 fitness = Packing.NextFit_GN(i.getChromosome(), i.getChromosome().size(), binMaxCapacity);
 		 }
 		 if(fitness != null) {
 			 // Muda o valor do fitness no individuo
