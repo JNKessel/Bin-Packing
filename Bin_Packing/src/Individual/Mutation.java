@@ -2,14 +2,15 @@ package Individual;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Mutation {
 
-	public static ArrayList<Integer> Realocate(ArrayList<Integer> pai) {
+	public static List<Integer> Realocate(List<Integer> pai) {
 
 		int tam = pai.size();
 		int r1, r2, aux;
-		ArrayList<Integer> res = (ArrayList<Integer>) pai.clone();
+		List<Integer> res = new ArrayList<Integer>(pai);
 
 		// Gera dois numeros distintos, aleatoriamente, menores que o tamanho do pai
 		do {
@@ -35,11 +36,11 @@ public class Mutation {
 		return res;
 	}
 
-	public static ArrayList<Integer> Swap(ArrayList<Integer> pai) {
+	public static List<Integer> Swap(List<Integer> pai) {
 
 		int tam = pai.size();
 		int r1, r2, aux;
-		ArrayList<Integer> res = (ArrayList<Integer>) pai.clone();
+		List<Integer> res = new ArrayList<Integer>(pai);
 
 		// Gera dois numeros distintos, aleatoriamente, menores que o tamanho do pai
 		do {
@@ -55,11 +56,11 @@ public class Mutation {
 		return res;
 	}
 
-	public static ArrayList<Integer> Two_Opt(ArrayList<Integer> pai) {
+	public static List<Integer> Two_Opt(List<Integer> pai) {
 
 		int tam = pai.size();
 		int r1, r2, aux;
-		ArrayList<Integer> res = (ArrayList<Integer>) pai.clone();
+		List<Integer> res = new ArrayList<Integer>(pai);
 
 		// Gera dois numeros distintos, aleatoriamente, menores que o tamanho do pai
 		do {

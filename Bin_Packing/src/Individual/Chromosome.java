@@ -21,14 +21,14 @@ public class Chromosome {
 		return newChromossomes12;
 	}
 	
-	public List<Integer> sufferMutation(int type) {
+	public void sufferMutation(int type) {
 		
 		if(type == 1){
-			return (Mutation.Realocate((ArrayList<Integer>)chromosome));
+			chromosome = (Mutation.Realocate(chromosome));
 		}else if(type == 2){
-			return (Mutation.Swap((ArrayList<Integer>)chromosome));
+			chromosome = (Mutation.Swap(chromosome));
 		}else{
-			return (Mutation.Two_Opt((ArrayList<Integer>)chromosome));
+			chromosome = (Mutation.Two_Opt(chromosome));
 		}
 	}
 	

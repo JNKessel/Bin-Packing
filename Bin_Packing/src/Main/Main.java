@@ -19,31 +19,57 @@ public class Main {
     	Integer test_totalBins;
     	
         System.out.println("Bin Packing Problem");
+
+        Integer numberOfItems = 5;
+        Integer binCap = 10;
+        List<Integer> items = new ArrayList<Integer>();
+        for(int i = 1; i < 9; i++) {
+        	items.add(i);
+        }
+        
+		System.out.println("Number of items: " + numberOfItems);
+		System.out.println("Bin Maximum Capacity: " + binCap);
+		System.out.println("Items: " + items);
+
+		System.out.println("--- Genetic Algorithm");
+
+		// Comeco da contagem de tempo do algoritmo
+		long start = System.currentTimeMillis();
 		
-		// Rodar testes
-		for (String test: test_files) {
-			// Ler arquivo de teste para coletar informacoes
-			FileData test_data = readFile(System.getProperty("user.dir") + "/src/SourceFiles/" + test);
-			
-			System.out.println("Number of items: " + test_data.getNumberOfItems());
-			System.out.println("Bin Maximum Capacity: " + test_data.getBinCapacity());
-			System.out.println("Items: " + test_data.getItems());
+		// Algoritmo Genetico
+		test_totalBins = algoritmo_genetico.naturalSelection(items, binCap, numberOfItems);
+		
+		//Final da contagem de tempo do algoritmo
+		long elapsedTime = System.currentTimeMillis() - start;
+		
+		System.out.println("Number of bins = " + test_totalBins);
+		System.out.println("Total time: " + elapsedTime/1000.0 + "s");
 
-			System.out.println("--- Genetic Algorithm");
-
-			// Comeco da contagem de tempo do algoritmo
-			long start = System.currentTimeMillis();
-			
-			// Algoritmo Genetico
-			test_totalBins = algoritmo_genetico.naturalSelection(test_data.getItems(),
-					test_data.getBinCapacity(), test_data.getNumberOfItems());
-			
-			//Final da contagem de tempo do algoritmo
-			long elapsedTime = System.currentTimeMillis() - start;
-			
-			System.out.println("Number of bins = " + test_totalBins);
-			System.out.println("Total time: " + elapsedTime/1000.0 + "s");
-		}
+        
+//		// Rodar testes
+//		for (String test: test_files) {
+//			// Ler arquivo de teste para coletar informacoes
+//			FileData test_data = readFile(System.getProperty("user.dir") + "/src/SourceFiles/" + test);
+//			
+//			System.out.println("Number of items: " + test_data.getNumberOfItems());
+//			System.out.println("Bin Maximum Capacity: " + test_data.getBinCapacity());
+//			System.out.println("Items: " + test_data.getItems());
+//
+//			System.out.println("--- Genetic Algorithm");
+//
+//			// Comeco da contagem de tempo do algoritmo
+//			long start = System.currentTimeMillis();
+//			
+//			// Algoritmo Genetico
+//			test_totalBins = algoritmo_genetico.naturalSelection(test_data.getItems(),
+//					test_data.getBinCapacity(), test_data.getNumberOfItems());
+//			
+//			//Final da contagem de tempo do algoritmo
+//			long elapsedTime = System.currentTimeMillis() - start;
+//			
+//			System.out.println("Number of bins = " + test_totalBins);
+//			System.out.println("Total time: " + elapsedTime/1000.0 + "s");
+//		}
 			
     }
    

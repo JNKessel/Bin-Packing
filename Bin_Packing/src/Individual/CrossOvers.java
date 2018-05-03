@@ -9,34 +9,35 @@ public class CrossOvers {
 	private static List<Integer> filho2;
 	
 	private static List<Integer> PMX (List<Integer> pai1, List<Integer> pai2) {
-		
+//		System.out.println("PMX Inicializacao");
 		int tam = pai1.size();
 		List<Integer> filho = new ArrayList<Integer>(); // Filho tem o mesmo tamanho do pai
 		for(int i = 0; i < tam; i++) { // Inicializar ArrayList com null (pra poder acessar as posicoes)
 			filho.add(null);
 		}
 		
-		ArrayList<Integer> ValoresInseridos = new ArrayList<Integer>();
+		List<Integer> ValoresInseridos = new ArrayList<Integer>();
 		
 		int a = (int) Math.ceil((double) pai1.size()/4);
 		int b = (int) Math.ceil((double) (pai1.size() - pai1.size()/4));
-		
+//		System.out.println("PMX PT1");
 		//Seleciona metade dos elementos do pai1 e pai2 e copia para filho1 e filho2,
 		//respectivamente, em suas posicoes correspondentes, 
 		for(int i=a ; i<b ; i++) {
 			filho.set(i, pai1.get(i));
 			ValoresInseridos.add(pai1.get(i));
 		}
-		
+//		System.out.println("PMX PT2");
 		//Procura os elementos do pai2 nas mesmas 
 		//posicoes para tentar inseri-los
 		for(int i=0; i<(tam/2); i++) {
-			
+//			System.out.println("PMX FOR");
 			if(pai1.get(a+i) != pai2.get(a+i) && ValoresInseridos.contains(pai2.get(a+i)) == false) {
 				int elemento = pai1.get(a+i);
 				int j=0;
 				
 				while(j<tam) {
+//					System.out.println("PMX WHILE");
 					//Caso a posicao do elemento do pai1 procurado, seja 
 					//encontrada no vetor pai2
 					if(elemento == pai2.get(j) ) {
@@ -57,8 +58,10 @@ public class CrossOvers {
 					else
 						j++;
 				}
+//				System.out.println("PMX END WHILE");
 			}
 		}
+//		System.out.println("PMX END FOR");
 		
 		//Completa o resto das posicoes vazias com os elementos do pai2
 		for(int i=0; i < tam; i++) {  
@@ -70,7 +73,9 @@ public class CrossOvers {
 	}
 	
 	public void ParcialmenteMapeado (List<Integer> pai1, List<Integer> pai2) {
+//		System.out.println("PMX F1");
 		filho1 = PMX(pai1,pai2);
+//		System.out.println("PMX F2");
 		filho2 = PMX(pai2,pai1);
 	}
 	

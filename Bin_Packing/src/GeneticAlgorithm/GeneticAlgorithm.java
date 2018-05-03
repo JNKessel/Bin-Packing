@@ -1,5 +1,6 @@
 package GeneticAlgorithm;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,7 +13,7 @@ import Packing.Packing;
 
 public class GeneticAlgorithm {
 	private Integer READY = 1;
-	private Integer NOT_READY = 1;
+	private Integer NOT_READY = 0;
 	private Integer FIRST_FIT = 1;
 	private Integer NEXT_FIT = 2;
 	
@@ -22,13 +23,14 @@ public class GeneticAlgorithm {
 	private Integer binMaxCapacity;
 	private Integer numberOfItems;
 	private Integer populationSize = 10; // Par
+	private Double mutationChance = 0.1;
 	
 	private Integer generationNumber = 0;
 	private Double generationsAverage;
 	private Integer generationsBest;
 	private Integer generationsWorst;
+	private Integer generationsWithoutImprovement = 0;
 
-	
 	public GeneticAlgorithm() {
 	}
 	
@@ -39,6 +41,7 @@ public class GeneticAlgorithm {
 		this.binMaxCapacity = binMaxCapacity;
 		this.numberOfItems = numberOfItems;
 				
+		
 		// Garantir que o tamanho da população não é maior que o número total de soluções (Fatorial(numberOfItems))
 		if(numberOfItems < 4) { // 4 é o menor número para o qual Fatorial(numero) > 10 (tamanho da populacao)
 			populationSize = Fatorial(numberOfItems);
@@ -46,50 +49,128 @@ public class GeneticAlgorithm {
 
 		List<Individuo> families;
 		List<Individuo> population;
+
+//		System.out.println("Primeira Geração:");
 		
 		// Gera população inicial de individuos
 		population = firstGeneration(this.items);
+		
+//		for(Individuo i: population) {
+//			System.out.println(i.getChromosome());
+//		}
+		
+//		System.out.println("Classificação:");
+		
 		// Classificar geracao
 		classifyGeneration(population, true);
-		while(terminal_condition == READY) {
+		
+//		System.out.println("Average: " + this.generationsAverage);
+//		System.out.println("Best: " + this.generationsBest);
+//		System.out.println("Worse: " + this.generationsWorst);
+		
+		while(terminal_condition != READY) {
+//			System.out.println("Familias:");
+			
 			// Selecionar pais e gerar filhos
 			families = generateFamilies(population);
+			
+//			for(Individuo i: families) {
+//				System.out.println(i.getChromosome());
+//			}
+			
+//			System.out.println("Classificação:");
+			
 			// Classificar geracao
 			classifyGeneration(families, false);
+			
+//			System.out.println("Average: " + this.generationsAverage);
+//			System.out.println("Best: " + this.generationsBest);
+//			System.out.println("Worse: " + this.generationsWorst);			
+			
+//			System.out.println("Próxima Geração:");
+			
 			// Selecionar individuos para a próxima geração
-			population = nextGeneration(population);
+			population = nextGeneration(families);
+			
+//			for(Individuo i: population) {
+//				System.out.println(i.getChromosome());
+//			}
+			
+//			System.out.println("CONDICAO TERMINAL:" + terminal_condition);
 		}
+
+		for(Individuo i: population) {
+			System.out.println("Chromossome: " + i.getChromosome() + "   " + "Fitness: " + i.getFitness());
+		}
+
+		System.out.println("Average: " + this.generationsAverage);
+		System.out.println("Best: " + this.generationsBest);
+		System.out.println("Worse: " + this.generationsWorst);
+		System.out.println("Total Generations: " + this.generationNumber);
+		System.out.println("Without Improvement: " + this.generationsWithoutImprovement);
+		
+		
+		totalBins = population.get(0).getFitness();
+		
 		return totalBins;
 	}
 	
 	private List<Individuo> firstGeneration(List<Integer> initial_items) {
 		List<Integer> initial_items_copy = new ArrayList<Integer>(initial_items);
 		List<Individuo> initial_population = new ArrayList<Individuo>();
-
-		// Gerar um individuo com ordenacao natral
+		Individuo novo;
+		
+		// Gerar um individuo com ordenacao natural
 		initial_population.add(new Individuo(initial_items_copy));
 		
 		// Gerar um individuo com ordenacao decrescente
-		Collections.sort(initial_items_copy, Collections.reverseOrder());
-		Individuo novo = new Individuo(initial_items_copy);
-		if(!initial_population.contains(novo)) {
-			initial_population.add(novo);			
+		if(initial_population.size() != populationSize) {
+			Collections.sort(initial_items_copy, Collections.reverseOrder());
+			try {
+				for(Individuo i: initial_population) {
+					if(i.getChromosome() != initial_items_copy) {
+						novo = new Individuo(initial_items_copy);
+						initial_population.add(novo);
+					}
+				}
+			}
+			catch(Exception e) {
+				// Do nothing
+			}
 		}
 		
 		// Gerar um individuo com ordenacao crescente
-		Collections.sort(initial_items_copy);
-		novo = new Individuo(initial_items_copy);
-		if(!initial_population.contains(novo)) {
-			initial_population.add(novo);			
+		if(initial_population.size() != populationSize) {
+			Collections.sort(initial_items_copy);
+			try {
+				for(Individuo i: initial_population) {
+					if(i.getChromosome() != initial_items_copy) {
+						novo = new Individuo(initial_items_copy);
+						initial_population.add(novo);
+					}
+				}
+			}
+			catch(Exception e) {
+				// Do nothing
+			}
+
 		}
 
 		// Gerar o resto dos individuos com ordenacao aleatoria
 		while(initial_population.size() != populationSize) {
 			Collections.shuffle(initial_items_copy);
-			novo = new Individuo(initial_items_copy);
-			if(!initial_population.contains(novo)) {
-				initial_population.add(novo);
+			try {
+				for(Individuo i: initial_population) {
+					if(i.getChromosome() != initial_items_copy) {
+						novo = new Individuo(initial_items_copy);
+						initial_population.add(novo);
+					}
+				}
 			}
+			catch(Exception e) {
+				// Do nothing
+			}
+
 		}
 		
 		generationNumber += 1;
@@ -98,10 +179,18 @@ public class GeneticAlgorithm {
 	}
 	
 	private List<Individuo> generateFamilies(List<Individuo> old_population) {
+//		System.out.println("Selecionar Pais");
+		
 		// Selecionar pais
 		List<List<Individuo>> population_parents = selectParents(old_population);
+		
+//		System.out.println("Gerar Filhos");
+		
 		// Recombinar pais para gerar filhos
 		List<Individuo> population_sons = generateChildren(population_parents);
+		
+//		System.out.println("Juntar Pais e Filhos");
+		
 		// Formar familias (juntar uma lista de individuos com pais e filhos)
 		List<Individuo> families = joinParentsChildren(old_population, population_sons);
 		return families;
@@ -112,7 +201,7 @@ public class GeneticAlgorithm {
 		List<List<Individuo>> parents = new ArrayList<List<Individuo>>();
 		
 		// Ate todos os pais serem selecionados
-		while(parents.size() != populationSize/2) {
+		while(parents.size() != populationSize/2 && old_population_copy.size() > 0) {
 			// Selecionar individuos aleatorios para serem pais
 			Individuo parent1 = chooseRandomParent(old_population_copy);
 			Individuo parent2 = chooseRandomParent(old_population_copy);
@@ -147,7 +236,7 @@ public class GeneticAlgorithm {
 			// Recombinar pais
 			Individuo parent1 = pair_parents.get(0);
 			Individuo parent2 = pair_parents.get(1);
-			List<Individuo> pair_children = parent1.generateChild(parent2);
+			List<Individuo> pair_children = parent1.generateChild(parent2, mutationChance, 1);
 			// Adicionar os filhos gerados a lista final de filhos
 			for(Individuo child: pair_children) {
 				children.add(child);
@@ -168,13 +257,39 @@ public class GeneticAlgorithm {
 	private List<Individuo> nextGeneration(List<Individuo> old_population) {
 		// Definir quais individuos das familias passam para a proxima
 		// geracao baseada na sua classificacao
+		List<Individuo> old_population_copy = new ArrayList<Individuo>(old_population);
 		List<Individuo> new_population = new ArrayList<Individuo>();
 		
 		// Ordenar lista do menor fitness para o maior
 		Collections.sort(old_population, new FitnessComparator());
 		
 		for(Individuo i: old_population) {
-			new_population.add(i);
+			if(new_population.size() < populationSize) {
+				try {
+					if(new_population.size() == 0) {
+						new_population.add(i);
+						old_population_copy.remove(i);
+					}
+					else {
+						for(Individuo j: new_population) {
+							if(j.getChromosome() != i.getChromosome()) {
+								new_population.add(i);
+								old_population_copy.remove(i);
+							}
+						}
+					}
+				}
+				catch(Exception e) {
+					// Do nothing
+				}
+			} else {
+				break;
+			}
+		}
+		
+		while (new_population.size() < populationSize) {
+			new_population.add(old_population_copy.get(0));
+			old_population_copy.remove(0);
 		}
 		
 		generationNumber += 1;
@@ -196,12 +311,14 @@ public class GeneticAlgorithm {
 		Double average = 0.0;
 		
 		// Pontos para mudar probabilidade de mutação
-		Integer mutationPoints = 0;
+		// mutationChance aumenta quando a populacao esta se estabilizando
+		// ou as medidas de avaliacao da populacao nao estao melhorando
+		mutationChance = 0.0;
 		
 		// Para todos os individuos da populacao
 		for(Individuo i: population) {
 			// Calcular o fitness
-			calcFitness(i, FIRST_FIT);
+			calcFitness(i, NEXT_FIT);
 			// Alterar medidas de classificacao
 			if(i.getFitness() < bestFitness) {
 				bestFitness = i.getFitness();
@@ -222,30 +339,38 @@ public class GeneticAlgorithm {
 		
 		// Avaliar média das geracoes para o total de bins utilizados
 		if(average > generationsAverage) {
-			mutationPoints += 1;
+			mutationChance += 0.1;
 		}
 		generationsAverage = (generationsAverage + average) / 2;
 		// Avaliar melhor número de bins utilizado em todas as geracoes
 		if(bestFitness > generationsBest) {
-			mutationPoints += 1;
+			mutationChance += 0.1;
+			generationsWithoutImprovement += 1;
 		} else {
+			generationsWithoutImprovement = 0;
 			generationsBest = bestFitness;
 		}
 		// Avaliar pior número de bins utilizado em todas as geracoes
 		if(worstFitness > generationsWorst) {
-			mutationPoints += 1;
+			mutationChance += 0.1;
 		} else {
 			generationsWorst = worstFitness;
 		}
 		// Avaliar o tempo da geracao, se esta nova ou velha
-		if(generationNumber > 500) {
-			mutationPoints += 3;
+		if(generationsWithoutImprovement > 15) {
+			mutationChance += 0.1;
+		}
+		else if(generationsWithoutImprovement > 20) {
+			mutationChance += 0.2;
+		}
+		else if(generationsWithoutImprovement > 25) {
+			mutationChance += 0.3;
 		}
 		
-		// TODO: Alterar mutacao de acordo com mutationPoints
-		// Aumentar probabilidade de mutacao se os mutationPoints forem altos
-		// Diminuir probabilidade de mutacao se os mutationPoints forem baixos
-		// MutationPoints aumentam quando a populacao esta ficando mais velha ou as medidas de avaliacao da populacao nao estao melhorando		
+		if(generationNumber > 1000 || generationsWithoutImprovement > 50) {
+			terminal_condition = READY;
+		}
+				
 	}
 	
 	// Fatorial
@@ -276,8 +401,8 @@ public class GeneticAlgorithm {
 	 }
 
 	
-    public static void main(String[] args) {
-    	System.out.println(((Integer) 1).compareTo((Integer) 2));
+//    public static void main(String[] args) {
+//    	System.out.println(((Integer) 1).compareTo((Integer) 2));
 //    	System.out.println("Hello There!");
 //    	List<Integer> list = new ArrayList<Integer>();
 //    	list.add(7);
@@ -294,6 +419,6 @@ public class GeneticAlgorithm {
 //			System.out.println(parent);
 //			System.out.println(list);
 //    	}
-    }
+//    }
 
 }
