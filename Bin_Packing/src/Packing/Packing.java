@@ -58,27 +58,27 @@ public class Packing {
 	}
 
 	public static List<List<Integer>> FirstFit_LS (List<Integer> items, int numberOfItens, int binMaxCapacity) {
-
 		List<List<Integer>> solution = new ArrayList<List<Integer>>();
-
 		Boolean fitted;
+		
+		// Para cada item nos items
 		for(Integer item: items) {
-			if(solution.size() > 0) {
-				fitted = false;
-				for(List<Integer> bin: solution) {
-					Integer totalWeight = bin.stream().mapToInt(Integer::intValue).sum();
-					if(totalWeight + item <= binMaxCapacity) {
-						bin.add(item);
-						fitted = true;
-						break;
-					}
+			// Inicializa fitted como "nao encaixou em nenhum bin"
+			fitted = false;
+			// Procura um bin em que o item encaixa
+			for(List<Integer> bin: solution) {
+				Integer totalWeight = bin.stream().mapToInt(Integer::intValue).sum();
+				if(totalWeight + item <= binMaxCapacity) {
+					// Ao encontrar um bin em que o item encaixa, adiciona ele ao bin
+					// e muda fitted para "encaixou em algum bin"
+					bin.add(item);
+					fitted = true;
+					break;
 				}
-				if(fitted == false) {
-					List<Integer> newBin = new ArrayList<Integer>();
-					newBin.add(item);
-					solution.add(newBin);
-				}
-			} else {
+			}
+			// Se ao final da procura o item "nao encaixou em nenhum bin"
+			if(fitted == false) {
+				// Adiciona um novo bin e coloca o item
 				List<Integer> newBin = new ArrayList<Integer>();
 				newBin.add(item);
 				solution.add(newBin);
@@ -87,6 +87,4 @@ public class Packing {
 		
 		return solution;
 	}
-
-	
 }
