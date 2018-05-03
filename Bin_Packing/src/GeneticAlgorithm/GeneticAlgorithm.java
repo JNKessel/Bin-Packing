@@ -147,7 +147,7 @@ public class GeneticAlgorithm {
 			// Recombinar pais
 			Individuo parent1 = pair_parents.get(0);
 			Individuo parent2 = pair_parents.get(1);
-			List<Individuo> pair_children = parent1.generateChildren(parent2);
+			List<Individuo> pair_children = parent1.generateChild(parent2);
 			// Adicionar os filhos gerados a lista final de filhos
 			for(Individuo child: pair_children) {
 				children.add(child);
