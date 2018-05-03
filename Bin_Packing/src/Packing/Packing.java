@@ -57,7 +57,7 @@ public class Packing {
 		return NumBins;
 	}
 
-	public static List<List<Integer>> FirstFit_LS (List<Integer> items, int numberOfItens, int binMaxCapacity) {
+	public static List<List<Integer>> FirstFit_LS (List<Integer> items, int binMaxCapacity) {
 		List<List<Integer>> solution = new ArrayList<List<Integer>>();
 		Boolean fitted;
 		
