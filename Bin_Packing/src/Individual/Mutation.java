@@ -88,6 +88,5 @@ public class Mutation {
 		r1 = a;
 		r2 = b;
 	}
-	
 
 }

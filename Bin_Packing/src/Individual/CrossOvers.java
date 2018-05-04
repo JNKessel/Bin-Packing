@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import GeneticAlgorithm.GeneticAlgorithm;
+
 public class CrossOvers {
 	
 	private static List<Integer> filho1;
@@ -20,13 +22,15 @@ public class CrossOvers {
 	 * 
 	 */
 	
-	private static List<Integer> PMX (List<Integer> pai1, List<Integer> pai2, int a, int b, HashMap<String, Integer> Hash_Items ) {
+	private static List<Integer> PMX (List<Integer> pai1, List<Integer> pai2, int a, int b) {
 //		System.out.println("PMX Inicializacao");
 		int tamanho = pai1.size();
 		List<Integer> filho = new ArrayList<Integer>(); // Filho tem o mesmo tamanho do pai
 		for(int i = 0; i < tamanho; i++) { // Inicializar ArrayList com null (pra poder acessar as posicoes)
 			filho.add(null);
 		}
+		
+		 HashMap<String, Integer> Hash_Items = GeneticAlgorithm.GetHashMap();
 		
 		//Obtem a representacao dos dois pais como strings, sem valores duplicados
 		String[] pai1_String = ConvertToString(Hash_Items, pai1);
@@ -38,14 +42,14 @@ public class CrossOvers {
 //		System.out.println("PMX PT1");
 		
 		//Seleciona parte dos elementos do pai1 filho, em suas respectivas posicoes  
-		for(int i=a ; i<b ; i++) {
+		for(int i=a ; i <= b ; i++) {
 			filho.set(i,(Hash_Items.get(pai1_String[i])));
 			ValoresInseridos.add(pai1_String[i]);
 		}
 		
 //		System.out.println("PMX PT2");
 		//Procura os elementos do pai2 nas mesmas posicoes para tentar inseri-los
-		for(int i=a; i < b; i++) {
+		for(int i=a; i <= b; i++) {
 //			System.out.println("PMX FOR");
 			
 			String Elemento_de_Insercao = pai2_String[i]; //valor do pai2 a ser inserido
@@ -58,7 +62,7 @@ public class CrossOvers {
 //				System.out.println("PMX WHILE");
 					
 					//Caso a posicao do elemento do pai1 procurado, seja encontrada no vetor pai2
-					if( Elemento_de_Referencia == pai2_String[j] ) {
+					if( Elemento_de_Referencia.equals(pai2_String[j]) == true ) {
 						if (filho.get(j) == null) {
 							//Caso a posicao esteja livre, o elemento do pai2 eh inserido
 							filho.set(j,(Hash_Items.get(Elemento_de_Insercao)));
@@ -97,6 +101,7 @@ public class CrossOvers {
 	 * garantimos que nao havera problemas com itens duplicados durante as recombinacoes
 	 */
 	
+	//TODO BREAK POINT
 	public static String[] ConvertToString(HashMap<String, Integer> hash_map, List<Integer> parent) {
 		
 		int tamanho = hash_map.size();
@@ -182,13 +187,13 @@ public class CrossOvers {
 	 * e com o que "resta" do segundo pai
 	 */
 	
-	public void ParcialmenteMapeado(List<Integer> pai1, List<Integer> pai2, HashMap<String, Integer> Hash_Items) {
+	public void ParcialmenteMapeado(List<Integer> pai1, List<Integer> pai2) {
 		
 		RandomIntervalo (pai1.size()); //Para cada Crossover cria um novo intervalo
 		// System.out.println("PMX F1");
-		filho1 = PMX(pai1, pai2, this.intervaloMin, this.intervaloMax, Hash_Items);
+		filho1 = PMX(pai1, pai2, this.intervaloMin, this.intervaloMax);
 		// System.out.println("PMX F2");
-		filho2 = PMX(pai2, pai1, this.intervaloMin, this.intervaloMax, Hash_Items);
+		filho2 = PMX(pai2, pai1, this.intervaloMin, this.intervaloMax);
 	}
 	
 	
