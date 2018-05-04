@@ -128,21 +128,24 @@ public class CrossOvers {
 				int lastPos = indice; // Guarda a posicao da primeira ocorrencia do valor repetido em pai
 
 				List<Integer> parentCopy = new ArrayList<Integer>();
-
+				parentCopy = parent.subList(0, tamanho);
+				int tamanhoCopia = tamanho;
+				
 				do {
 					// Copia sublista, a partir da posicao seguinte do indice guardado ate
 					// parent.size() (porque eh exclusivo)
-					parentCopy = parent.subList(lastPos + 1, tamanho);
-
+					parentCopy = parentCopy.subList(lastPos + 1, tamanhoCopia);
+					tamanhoCopia = parentCopy.size();
+					
 					// Procura proxima ocorrendia do elemento na sublista, 
 					// retorna -1 se nao encontrar
 					lastPos = parentCopy.indexOf(valor);
-
-				} while (posRepetidas.contains(indice + (lastPos + 1)) == true);
+					
+					indice += lastPos+1;
+				} while (posRepetidas.contains(indice) == true);
 
 				if (lastPos != -1) {
 					// Guarda posicao da nova ocorrencia, em relacao a sua posicao original na lista pai
-					indice = indice + (lastPos + 1);
 					posRepetidas.add(indice);
 					parentString[indice] = ("N"+i);
 				}
