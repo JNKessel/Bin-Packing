@@ -18,7 +18,7 @@ public class GeneticAlgorithm {
 	private Integer FIRST_FIT = 1;
 	private Integer NEXT_FIT = 2;
 
-	private HashMap<String, Integer> mapItems;
+	private static HashMap<String, Integer> mapItems = new HashMap<String, Integer>();
 	private Integer terminal_condition = NOT_READY;
 	private Integer totalBins;
 	private List<Integer> items;
@@ -40,9 +40,10 @@ public class GeneticAlgorithm {
 		// Copy Initial Problem Variables
 		this.totalBins = numberOfItems;
 		this.items = new ArrayList<Integer>(initial_items);
-		this.mapItems = Hash_Items(initial_items);
 		this.binMaxCapacity = binMaxCapacity;
 		this.numberOfItems = numberOfItems;
+		
+		Hash_Items(initial_items);
 
 		// Garantir que o tamanho da população não é maior que o número total de
 		// soluções (Fatorial(numberOfItems))
@@ -177,6 +178,7 @@ public class GeneticAlgorithm {
 		return initial_population;
 	}
 
+	
 	private List<Individuo> generateFamilies(List<Individuo> old_population) {
 		// System.out.println("Selecionar Pais");
 
@@ -195,6 +197,7 @@ public class GeneticAlgorithm {
 		return families;
 	}
 
+	
 	private List<List<Individuo>> selectParents(List<Individuo> old_population) {
 		List<Individuo> old_population_copy = new ArrayList<Individuo>(old_population);
 		List<List<Individuo>> parents = new ArrayList<List<Individuo>>();
@@ -397,18 +400,21 @@ public class GeneticAlgorithm {
 		}
 	}
 	
-	public static HashMap<String, Integer> Hash_Items(List<Integer> parent) {
+	public void Hash_Items(List<Integer> parent) {
 
-		HashMap<String, Integer> mapItems = new HashMap<String, Integer>();
+		//HashMap<String, Integer> mapItems = new HashMap<String, Integer>();
 		
 		// Associa cada valor dos elementos do pai a uma string atraves de um hashmap. A string eh 
 		// representada por "N" seguido de um sufixo, sendo este, um valor inteiro de 1 ate o tamanho do pai
 		for(int i=0; i < parent.size(); i++) {
 			mapItems.put("N"+(i+1), parent.get(i));
 		}
-		
+	}
+	
+	public static HashMap<String, Integer> GetHashMap() {
 		return mapItems;
 	}
+	
 		
 }
 	
