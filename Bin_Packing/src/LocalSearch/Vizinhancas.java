@@ -14,7 +14,7 @@ public class Vizinhancas {
 		
 		Collections.shuffle(res);
 		
-		for(i=0; i<res.size();i++){
+		for(i=0; i<res.size()-1;i++){
 			
 			bin = res.get(i);
 			
@@ -51,7 +51,7 @@ public class Vizinhancas {
 		ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(solucao);
 		
 		Collections.shuffle(res);
-		for(i=0; i<res.size();i++){
+		for(i=0; i<res.size()-1;i++){
 			bin = res.get(i);
 			ArrayList<Integer> temp = new ArrayList<Integer>(bin);
 			
@@ -85,7 +85,7 @@ public class Vizinhancas {
 		ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(solucao);
 		
 		Collections.shuffle(res);
-		for(i=0; i<res.size();i++){
+		for(i=0; i<res.size()-1;i++){
 			bin = res.get(i);
 			ArrayList<Integer> temp = new ArrayList<Integer>(bin);
 			
@@ -125,7 +125,7 @@ public class Vizinhancas {
 		ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(solucao);
 		
 		Collections.shuffle(res);
-		for(i=0; i<res.size();i++){
+		for(i=0; i<res.size()-1;i++){
 			bin = res.get(binNum);
 			ArrayList<Integer> temp = new ArrayList<Integer>(bin);
 			
@@ -150,6 +150,54 @@ public class Vizinhancas {
 						
 						return res;
 					}	
+				}	
+			}
+		}
+		return res;
+	}
+	
+	public static ArrayList<ArrayList<Integer>> shake(ArrayList<ArrayList<Integer>> solucao){
+		
+		int itemNum, item, i, item2Num, j;
+		ArrayList<Integer> bin;
+		ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(solucao);
+		
+		Collections.shuffle(res);
+		
+		for(i=0; i<res.size()-1;i++){
+			
+			bin = res.get(i);
+			
+			itemNum = new Random().nextInt(bin.size() - 1);
+			
+			item = bin.get(itemNum);
+			
+			for(ArrayList<Integer> bins2 : res){
+				
+				if(bins2 != bin){
+					
+					Collections.shuffle(bins2);
+					
+					for(j=0; j<bins2.size()-1;j++){
+						item2Num = bins2.get(j);
+						
+						for(ArrayList<Integer> bins3 : res){
+							if(bins3 != bins2 && bins3 != bin){
+								
+								if(sum(bins3) + item2Num <= binSize && sum(bins2) - item2Num + item <= binSize){
+								
+									bins3.add(item2Num);
+									
+									bins2.remove(Integer.valueOf(item2Num));
+									bins2.add(item);
+									
+									bin.remove(Integer.valueOf(item));
+									
+									return res;
+								}
+							}
+						}
+					}
 				}	
 			}
 		}
