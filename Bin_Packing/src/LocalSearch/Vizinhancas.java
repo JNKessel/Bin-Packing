@@ -26,6 +26,8 @@ public class Vizinhancas {
 		// então não vejo o porque de ter um shuffle aqui.
 		Collections.shuffle(res);
 		
+		// FIXME: Iterando de i ate res.size() - 1 você estará sempre excluindo o último bin.
+		// Para iterar em todos os bins use i < res.size(), ou i <= res.size() - 1
 		for(i=0; i<res.size()-1;i++){
 			
 			bin = res.get(i);
@@ -103,6 +105,8 @@ public class Vizinhancas {
 		ArrayList<Integer> bin;
 		ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(solucao);
 		
+		// FIXME: Mesma coisa do exchange1_1, nao tem porque tem um shuffle aqui. Vai
+		// alterar a solução que temos.
 		Collections.shuffle(res);
 		
 		for(i=0; i<res.size()-1;i++){
