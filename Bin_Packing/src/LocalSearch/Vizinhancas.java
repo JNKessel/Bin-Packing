@@ -98,40 +98,44 @@ public class Vizinhancas {
 		return res;
 	}
 	
-	public static ArrayList<ArrayList<Integer>> exchange2_A(ArrayList<ArrayList<Integer>> solucao){
+	public static ArrayList<ArrayList<Integer>> exchange2_A(ArrayList<ArrayList<Integer>> solucao, Integer binMaxCapacity){
 		
 		int itemsNum[];
 		int binNum, item1, item2, i;
-		ArrayList<Integer> bin;
 		ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(solucao);
+		ArrayList<ArrayList<Integer>> solucao_aux = new ArrayList<ArrayList<Integer>>(solucao);
+		Boolean foundBin = false;
+		Random random = new Random();
 		
-		// FIXME: Mesma coisa do exchange1_1, nao tem porque tem um shuffle aqui. Vai
-		// alterar a solução que temos.
-		Collections.shuffle(res);
-		
-		for(i=0; i<res.size()-1;i++){
-			bin = res.get(i);
-			ArrayList<Integer> temp = new ArrayList<Integer>(bin);
+		while((solucao_aux.size() > 0) || (foundBin == false)) {
+			Integer aleatoryBinNumber = random.nextInt(solucao_aux.size());
+			ArrayList<Integer> aleatoryBin = solucao_aux.get(aleatoryBinNumber);
+			solucao_aux.remove(aleatoryBin);
 			
-			itemsNum = new Random().ints(0, bin.size()-1).distinct().limit(2).toArray(); //Retorna 2 numeros aleatorios distintos no intervalo
-			item1 = bin.get(itemsNum[0]);
-			item2 = bin.get(itemsNum[1]);
+			itemsNum = random.ints(0, aleatoryBin.size()).distinct().limit(2).toArray();
+			item1 = aleatoryBin.get(itemsNum[0]);
+			item2 = aleatoryBin.get(itemsNum[1]);
 			
-			for(ArrayList<Integer> bins : res){
-				
-				if(bins != bin){
+			Integer itemsWeigth = item1 + item2;
+			
+			for(ArrayList<Integer> bin: res) {
+				if(!aleatoryBin.equals(bin)) {
+					Integer weightInActualBin = bin.stream().mapToInt(Integer::intValue).sum();
+					
+					if((weightInActualBin + itemsWeigth) <= binMaxCapacity) {
+						bin.add(item1);
+						bin.add(item2);
+						ArrayList<Integer> aleatoryBinInSolution = res.get(res.indexOf(aleatoryBin));
+						aleatoryBinInSolution.remove(Integer.valueOf(item1));
+						aleatoryBinInSolution.remove(Integer.valueOf(item2));
 						
-					if(sum(bins) + item1 + item2 <= binSize){
-						bin.remove(Integer.valueOf(item1));
-						bin.remove(Integer.valueOf(item2));
-							
-						bins.add(item1);
-						bins.add(item2);
-						return res;
-					}	
-				}	
+						foundBin = true;
+						break;
+					}
+				}
 			}
 		}
+		
 		return res;
 	}
 	
@@ -270,4 +274,5 @@ public class Vizinhancas {
 
 	     return sum;
 	}
+	
 }

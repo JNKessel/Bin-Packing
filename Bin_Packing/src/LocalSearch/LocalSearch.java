@@ -113,25 +113,20 @@ public class LocalSearch {
 	    }
 	}
 
+	
 		
 //  public static void main(String[] args) {
-//	  List<Integer> rainbow = new ArrayList<Integer>();
-//	  rainbow.add(2);
-//	  rainbow.add(15);
-//	  rainbow.add(7);
-//	  rainbow.add(4);
-//	  System.out.println(rainbow);
-//
-//	  List<Integer> rain = new ArrayList<Integer>();
-//	  rain.add(2);
-//	  rain.add(15);
-//	  rain.add(7);
-//	  rain.add(4);
-//	  System.out.println(rain);
-//
-//	  System.out.println(rain.equals(rainbow));
+//	  List<Integer> list = new ArrayList<Integer>();
+//	  list.add(1);
+//	  list.add(2);
+//	  list.add(3);
+//	  list.add(4);
+//	  list.add(5);
+//	  System.out.println(list);
+//	  list.remove(Integer.valueOf(4));
+//	  System.out.println(list);
 //  }
-//}
+}
 
 
 //Troca 1-1: exchange1
