@@ -10,6 +10,8 @@ import java.util.Map;
 import GeneticAlgorithm.GeneticAlgorithm.FitnessComparator;
 import Individual.Individuo;
 import Packing.Packing;
+import Packing.Packing.ReverseWeightComparator;
+import Packing.Packing.WeightComparator;
 
 public class LocalSearch {
 	private Integer totalBins;
@@ -57,16 +59,22 @@ public class LocalSearch {
 		
 		// Aplicar vizinhança Troca 1-1
 		List<List<Integer>> neighbor_1= Vizinhancas.exchange1(main_solution_copy);
+		neighbor_1 = Packing.Realocate_LS(neighbor_1, binMaxCapacity);
 		// Aplicar vizinhança Troca 2-0A
 		List<List<Integer>> neighbor_2= Vizinhancas.exchange2_A(main_solution_copy, binMaxCapacity);
+		neighbor_2 = Packing.Realocate_LS(neighbor_2, binMaxCapacity);
 		// Aplicar vizinhança Troca 2-0B
 		List<List<Integer>> neighbor_3= Vizinhancas.exchange2_B(main_solution_copy, binMaxCapacity);
+		neighbor_3 = Packing.Realocate_LS(neighbor_3, binMaxCapacity);
 		// Aplicar vizinhança Troca 2-1
 		List<List<Integer>> neighbor_4= Vizinhancas.exchange2_C(main_solution_copy, binMaxCapacity);
+		neighbor_4 = Packing.Realocate_LS(neighbor_4, binMaxCapacity);
 		// Aplicar vizinhança Troca Perturbação
 		List<List<Integer>> neighbor_5= Vizinhancas.shake(main_solution_copy, binMaxCapacity);
+		neighbor_5 = Packing.Realocate_LS(neighbor_5, binMaxCapacity);
 		// Aplicar vizinhança Troca Reconstrução
 		List<List<Integer>> neighbor_6= Vizinhancas.restructure(main_solution_copy, binMaxCapacity);
+		neighbor_6 = Packing.Realocate_LS(neighbor_6, binMaxCapacity);
 		
 		// Limpar lista de vizinhos
 		neighbors.clear();
@@ -122,9 +130,29 @@ public class LocalSearch {
 //	  list.add(3);
 //	  list.add(4);
 //	  list.add(5);
+//	  
+//	  List<Integer> aux1 = new ArrayList<Integer>(list);
+//	  List<Integer> aux2 = new ArrayList<Integer>(list);
+//
+//	  it:{
+//		for(Integer bin1: aux1) {
+//			for(Integer bin2: aux2) {
+//				if(bin1 != bin2) {
+//					if(bin1 == 3) {
+//						list.remove(Integer.valueOf(bin1));
+//					}
+//					System.out.println("diferente! " + bin1 + " " + bin2);
+//				} else {
+//					System.out.println("igual! " + bin1 + " " + bin2);
+//				}
+//			}
+//		}
+//	  }
+//
 //	  System.out.println(list);
-//	  list.remove(Integer.valueOf(4));
-//	  System.out.println(list);
+//	System.out.println(aux1);
+//	System.out.println(aux2);
+//	
 //  }
 }
 

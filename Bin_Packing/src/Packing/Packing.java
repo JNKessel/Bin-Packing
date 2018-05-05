@@ -1,7 +1,10 @@
 package Packing;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import LocalSearch.LocalSearch.BinsComparator;
 
 public class Packing {
 
@@ -87,4 +90,61 @@ public class Packing {
 		
 		return solution;
 	}
+	
+	public static List<List<Integer>> Realocate_LS (List<List<Integer>> solution, int binMaxCapacity) {
+		List<List<Integer>> better_solution = new ArrayList<List<Integer>>(solution);
+		List<List<Integer>> aux1 = new ArrayList<List<Integer>>(solution);
+		List<List<Integer>> aux2 = new ArrayList<List<Integer>>(solution);
+		
+		// Ordena os bins por ordem crescente de peso / ordem descrescente de espaço livre
+		Collections.sort(aux1, new WeightComparator());
+		// Ordena os bins por ordem decrescente de peso / ordem crescente de espaço livre
+		Collections.sort(aux2, new ReverseWeightComparator());
+		
+		// Para todos os bins começando do que tem mais espaço livre para o que tem menos espaço livre
+		for(List<Integer> bin1: aux1) {
+			// Para todos os itens desse bin
+			for(Integer itemInBin1: bin1) {
+				// Para todos os bins começando do que está mais cheio para o que está mais vazio
+				for(List<Integer> bin2: aux2) {
+					// Confere se nao é o mesmo bin
+					if(bin1 != bin2) {
+						Integer weightInBin2 = bin2.stream().mapToInt(Integer::intValue).sum();
+						// Tenta encaixar o item do bin mais vazio no bin mais cheio
+						if((weightInBin2 + itemInBin1) <= binMaxCapacity) {
+							List<Integer> Bin1InSolution = better_solution.get(better_solution.indexOf(bin1));
+							List<Integer> Bin2InSolution = better_solution.get(better_solution.indexOf(bin2));
+							Bin1InSolution.remove(Integer.valueOf(itemInBin1));
+							Bin2InSolution.add(itemInBin1);
+							
+							break;
+						}
+					}
+				}
+			}
+		}
+		
+		return better_solution;
+	}
+	
+	// Compara o peso dos bins (menor ganha)
+	public static class WeightComparator implements Comparator<List<Integer>> {
+	    @Override
+	    public int compare(List<Integer> o1, List<Integer> o2) {
+	    	Integer weight_o1 = o1.stream().mapToInt(Integer::intValue).sum();
+	    	Integer weight_o2 = o2.stream().mapToInt(Integer::intValue).sum();
+	        return weight_o1.compareTo(weight_o2);
+	    }
+	}
+
+	// Compara o peso dos bins (maior ganha)
+	public static class ReverseWeightComparator implements Comparator<List<Integer>> {
+	    @Override
+	    public int compare(List<Integer> o1, List<Integer> o2) {
+	    	Integer weight_o1 = o1.stream().mapToInt(Integer::intValue).sum();
+	    	Integer weight_o2 = o2.stream().mapToInt(Integer::intValue).sum();
+	        return -weight_o1.compareTo(weight_o2);
+	    }
+	}
+
 }
