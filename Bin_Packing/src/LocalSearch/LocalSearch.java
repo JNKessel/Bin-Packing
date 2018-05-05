@@ -120,46 +120,5 @@ public class LocalSearch {
 	        return numberOfBins_o1.compareTo(numberOfBins_o2);
 	    }
 	}
-
 	
-		
-//  public static void main(String[] args) {
-//	  List<Integer> list = new ArrayList<Integer>();
-//	  list.add(1);
-//	  list.add(2);
-//	  list.add(3);
-//	  list.add(4);
-//	  list.add(5);
-//	  
-//	  List<Integer> aux1 = new ArrayList<Integer>(list);
-//	  List<Integer> aux2 = new ArrayList<Integer>(list);
-//
-//	  it:{
-//		for(Integer bin1: aux1) {
-//			for(Integer bin2: aux2) {
-//				if(bin1 != bin2) {
-//					if(bin1 == 3) {
-//						list.remove(Integer.valueOf(bin1));
-//					}
-//					System.out.println("diferente! " + bin1 + " " + bin2);
-//				} else {
-//					System.out.println("igual! " + bin1 + " " + bin2);
-//				}
-//			}
-//		}
-//	  }
-//
-//	  System.out.println(list);
-//	System.out.println(aux1);
-//	System.out.println(aux2);
-//	
-//  }
 }
-
-
-//Troca 1-1: exchange1
-//Troca 2-0A: exchange2_A
-//Troca 2-0B: exchange2_B
-//Troca 2-1: exchange2_C
-//Perturbação: shake
-//Reconstrução: restructure
