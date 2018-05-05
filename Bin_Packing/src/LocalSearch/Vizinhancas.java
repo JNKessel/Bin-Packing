@@ -111,6 +111,7 @@ public class Vizinhancas {
 			Integer aleatoryBinNumber = random.nextInt(solucao_aux.size());
 			ArrayList<Integer> aleatoryBin = solucao_aux.get(aleatoryBinNumber);
 			solucao_aux.remove(aleatoryBin);
+			ArrayList<Integer> aleatoryBinInSolution = res.get(res.indexOf(aleatoryBin));
 			
 			itemsNum = random.ints(0, aleatoryBin.size()).distinct().limit(2).toArray();
 			item1 = aleatoryBin.get(itemsNum[0]);
@@ -119,13 +120,12 @@ public class Vizinhancas {
 			Integer itemsWeigth = item1 + item2;
 			
 			for(ArrayList<Integer> bin: res) {
-				if(!aleatoryBin.equals(bin)) {
+				if(aleatoryBinInSolution != bin) {
 					Integer weightInActualBin = bin.stream().mapToInt(Integer::intValue).sum();
 					
 					if((weightInActualBin + itemsWeigth) <= binMaxCapacity) {
 						bin.add(item1);
 						bin.add(item2);
-						ArrayList<Integer> aleatoryBinInSolution = res.get(res.indexOf(aleatoryBin));
 						aleatoryBinInSolution.remove(Integer.valueOf(item1));
 						aleatoryBinInSolution.remove(Integer.valueOf(item2));
 						
@@ -139,43 +139,74 @@ public class Vizinhancas {
 		return res;
 	}
 	
-	public static ArrayList<ArrayList<Integer>> exchange2_B(ArrayList<ArrayList<Integer>> solucao){
+	public static ArrayList<ArrayList<Integer>> exchange2_B(ArrayList<ArrayList<Integer>> solucao, Integer binMaxCapacity){
 		
 		int itemsNum[];
 		int binNum, item1, item2, i;
-		ArrayList<Integer> bin;
+//		ArrayList<Integer> bin;
 		ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(solucao);
 		
-		Collections.shuffle(res);
-		for(i=0; i<res.size()-1;i++){
-			bin = res.get(i);
-			ArrayList<Integer> temp = new ArrayList<Integer>(bin);
-			
-			itemsNum = new Random().ints(0, bin.size()-1).distinct().limit(2).toArray(); //Retorna 2 numeros aleatorios distintos no intervalo
-			item1 = bin.get(itemsNum[0]);
-			item2 = bin.get(itemsNum[1]);
-			
-			for(ArrayList<Integer> bins1 : res){
-				
-				for(ArrayList<Integer> bins2 : res){
-				
-					if(bins1 != bin && bins2 != bin){
+		ArrayList<ArrayList<Integer>> solucao_aux = new ArrayList<ArrayList<Integer>>(solucao);
+		Boolean foundBin = false;
+		Random random = new Random();
+		
+		while((solucao_aux.size() > 0) || (foundBin == false)) {
+			Integer aleatoryBinNumber = random.nextInt(solucao_aux.size());
+			ArrayList<Integer> aleatoryBin = solucao_aux.get(aleatoryBinNumber);
+			solucao_aux.remove(aleatoryBin);
+			ArrayList<Integer> aleatoryBinInSolution = res.get(res.indexOf(aleatoryBin));
+
+			itemsNum = random.ints(0, aleatoryBin.size()).distinct().limit(2).toArray();
+			item1 = aleatoryBin.get(itemsNum[0]);
+			item2 = aleatoryBin.get(itemsNum[1]);
 						
-						int bin1Storage = sum(bins1) + item1;
-						int bin2Storage = sum(bins2) + item2;
+			searchForBins: {
+				for(ArrayList<Integer> bin1: res) {	
+					if((aleatoryBinInSolution != bin1)) {
+						Integer weightInActualBin1 = bin1.stream().mapToInt(Integer::intValue).sum();
+						
+						if((weightInActualBin1 + item1 + item2) <= binMaxCapacity) {
+							bin1.add(item1);
+							bin1.add(item2);
+							aleatoryBinInSolution.remove(Integer.valueOf(item1));
+							aleatoryBinInSolution.remove(Integer.valueOf(item2));
 							
-						if(bin1Storage <= binSize && bin2Storage <= binSize){
-							bin.remove(Integer.valueOf(item1));
-							bin.remove(Integer.valueOf(item2));
+							foundBin = true;
+							break searchForBins;
+						}
+						
+						List<ArrayList<Integer>> others = res.subList(res.indexOf(bin1) + 1, res.size());
+						
+						for(ArrayList<Integer> bin2: others) {
+							if(aleatoryBinInSolution != bin2) {
+								Integer weightInActualBin2 = bin2.stream().mapToInt(Integer::intValue).sum();
 								
-							bins1.add(item1);
-							bins2.add(item2);
-							return res;
-						}	
+								if((weightInActualBin1 + item1 <= binMaxCapacity) &&
+									(weightInActualBin2 + item2 <= binMaxCapacity)) {
+									bin1.add(Integer.valueOf(item1));
+									bin2.add(Integer.valueOf(item2));
+									aleatoryBinInSolution.remove(Integer.valueOf(item1));
+									aleatoryBinInSolution.remove(Integer.valueOf(item2));
+									
+									foundBin = true;
+									break searchForBins;
+								} else if((weightInActualBin1 + item2 <= binMaxCapacity) &&
+										(weightInActualBin2 + item1 <= binMaxCapacity)) {
+									bin1.add(Integer.valueOf(item2));
+									bin2.add(Integer.valueOf(item1));
+									aleatoryBinInSolution.remove(Integer.valueOf(item1));
+									aleatoryBinInSolution.remove(Integer.valueOf(item2));
+									
+									foundBin = true;
+									break searchForBins;
+								}
+							}
+						}
 					}
 				}
 			}
 		}
+		
 		return res;
 	}
 	
