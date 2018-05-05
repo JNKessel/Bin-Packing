@@ -12,22 +12,67 @@ public class Vizinhancas {
 		ArrayList<Integer> bin;
 		ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(solucao);
 		
+		// FIXME: Shuffle serve para embaralhar os elementos da lista.
+		// Nesse caso vc só estaria trocando a ordem dos bins, mas mesmo assim alterando
+		// de certa forma a solução. Fora que isso não está ajudando em nada no algoritmo,
+		// então não vejo o porque de ter um shuffle aqui.
 		Collections.shuffle(res);
 		
 		for(i=0; i<res.size()-1;i++){
 			
 			bin = res.get(i);
 			
+			// FIXME: O método Random().nextInt(N) em Java seleciona num número random
+			// entre 0 (inclusivo) a N (exclusivo). Então, se vc escolhe N = 50, ele vai
+			// selecionar um número de 0-49.
+			// Se voce quer escolher um item random de um bin, vc tem que escolher um
+			// número de 0-(bin.size() - 1) mas na funcao vc poe Random().nextInt(bin.size())
 			itemNum = new Random().nextInt(bin.size() - 1);
 			
 			item = bin.get(itemNum);
 			
 			for(ArrayList<Integer> bins : res){
 				
+				// FIXME: Igual a comparacao que o Marcelo utilizou com Strings == ou != isso
+				// NÃO FUNCIONA para Objetos em Java. A comparacao de Objetos em Java é feita
+				// pelo método equals. Então temos q utilizar objeto1.equals(objeto2) para
+				// comparar se os Objetos objeto1 e objeto2 são iguais. Para fazer a mesma
+				// comparacao mas para verificar se os Objetos são diferentes podemos fazer
+				// !objeto1.equals(objeto2)
 				if(bins != bin){
 					
 					for(int itens : bins){
 						
+						// Vi que voce fez uma funcao para somar os itens em um bin. Não tem
+						// o menor problema fazer isso, mas se voce tivesse pesquisado, ja
+						// existe em Java uma função pronta para fazer isso.
+						// Para List<Integer> minha_lista:
+						// int sum = minha_lista.stream().mapToInt(Integer::intValue).sum();
+
+						// FIXME: Não é bom ter uma função de some, mesmo q seja da biblioteca
+						// de Java ou outra coisa sendo refeita 2 vezes em um NESTED FOR.
+						// Isso vai custar mt tempo. Coloca uma variável fora do for pra 
+						// guardar o valor desse (sum(bin) - item) que vc vai usar sempre aqui
+						
+						// FIXME: Só por garantia, coloca parenteses nas condicoes (A) && (B)
+						
+						// FIXME: Esse sum(bins) também pode ficar numa variável fora deste for
+						// pra evitar o custo de refazer a operacao
+						
+						// FIXME: Se a variavel binSize for a capacidade máxima de um bin, coloca
+						// um parametro na funcao que eu passo essa variavel pra voce.
+						
+						// Não precisa desse Integer.valueOf(item) na remocção de um item do bin,
+						// mas nao tem problema
+						
+						// FIXME: Assim que você acha um bin para trocar os itens, é bom dar um break
+						// para parar o for e evitar o custo de ficar reiterando o for e uma outra
+						// condicao para dar break no outro for também. Isso é bom tanto para
+						// evitar que o programa continua procurando o bin quando voce ja achou ele
+						// e para evitar que exista outro bin que atenda aos mesmos requisitos
+						// e ai ele vai trocar de novo ate que os fors acabem.
+						// OBS: Funções em Java acho q podem retornar mais de uma vez, ele nao
+						// para quando da return igual a liguagem C.
 						if(sum(bin) - item + itens <= binSize && sum(bins) - itens + item <= binSize){
 							bin.remove(Integer.valueOf(item));
 							bin.add(itens);
