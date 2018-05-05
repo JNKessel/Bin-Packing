@@ -136,7 +136,11 @@ public class Vizinhancas {
 			}
 		}
 		
-		return res;
+		if(foundBin) {
+			return res;
+		} else {
+			return null;
+		}
 	}
 	
 	public static ArrayList<ArrayList<Integer>> exchange2_B(ArrayList<ArrayList<Integer>> solucao, Integer binMaxCapacity){
@@ -161,7 +165,7 @@ public class Vizinhancas {
 			item2 = aleatoryBin.get(itemsNum[1]);
 						
 			searchForBins: {
-				for(ArrayList<Integer> bin1: res) {	
+				for(ArrayList<Integer> bin1: res.subList(0, res.size() - 1)) {	
 					if((aleatoryBinInSolution != bin1)) {
 						Integer weightInActualBin1 = bin1.stream().mapToInt(Integer::intValue).sum();
 						
@@ -207,7 +211,11 @@ public class Vizinhancas {
 			}
 		}
 		
-		return res;
+		if(foundBin) {
+			return res;
+		} else {
+			return null;
+		}
 	}
 	
 	public static ArrayList<ArrayList<Integer>> exchange2_C(ArrayList<ArrayList<Integer>> solucao, Integer binMaxCapacity){
@@ -256,56 +264,60 @@ public class Vizinhancas {
 			}
 		}
 		
-		return res;
+		if(foundBin) {
+			return res;
+		} else {
+			return null;
+		}
 	}
 	
-	public static ArrayList<ArrayList<Integer>> shake(ArrayList<ArrayList<Integer>> solucao){
+	public static ArrayList<ArrayList<Integer>> shake(ArrayList<ArrayList<Integer>> solucao, Integer binMaxCapacity){
 		
 		int itemNum, item, i, item2Num, j;
-		ArrayList<Integer> bin;
+//		ArrayList<Integer> bin;
 		ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(solucao);
+		Boolean foundBin = false;
+		Random random = new Random();
+		Integer aleatoryItemNumber;
 		
-		Collections.shuffle(res);
-		
-		for(i=0; i<res.size()-1;i++){
-			
-			bin = res.get(i);
-			
-			itemNum = new Random().nextInt(bin.size() - 1);
-			
-			item = bin.get(itemNum);
-			
-			for(ArrayList<Integer> bins2 : res){
-				
-				if(bins2 != bin){
-					
-					Collections.shuffle(bins2);
-					
-					for(j=0; j<bins2.size()-1;j++){
-						item2Num = bins2.get(j);
+		searchForBins: {
+			for(ArrayList<Integer> bin1: res.subList(0, res.size() - 2)) {	
+				aleatoryItemNumber = random.nextInt(bin1.size());
+				Integer aleatoryItemBin1 = bin1.get(aleatoryItemNumber);
+				Integer weightInActualBin1 = bin1.stream().mapToInt(Integer::intValue).sum();
+												
+				for(ArrayList<Integer> bin2: res.subList(res.indexOf(bin1) + 1, res.size() - 1)) {
+					aleatoryItemNumber = random.nextInt(bin2.size());
+					Integer aleatoryItemBin2 = bin2.get(aleatoryItemNumber);
+					Integer weightInActualBin2 = bin2.stream().mapToInt(Integer::intValue).sum();
+													
+					for(ArrayList<Integer> bin3: res.subList(res.indexOf(bin2) + 1, res.size())) {
+						Integer weightInActualBin3 = bin3.stream().mapToInt(Integer::intValue).sum();
 						
-						for(ArrayList<Integer> bins3 : res){
-							if(bins3 != bins2 && bins3 != bin){
-								
-								if(sum(bins3) + item2Num <= binSize && sum(bins2) - item2Num + item <= binSize){
-								
-									bins3.add(item2Num);
-									
-									bins2.remove(Integer.valueOf(item2Num));
-									bins2.add(item);
-									
-									bin.remove(Integer.valueOf(item));
-									
-									return res;
-								}
-							}
+						if(((weightInActualBin3 + aleatoryItemBin2) <= binMaxCapacity) &&
+							((weightInActualBin2 - aleatoryItemBin2 + aleatoryItemBin1) <= binMaxCapacity)) {
+							bin1.remove(Integer.valueOf(aleatoryItemBin1));
+							bin2.add(aleatoryItemBin1);
+							bin2.remove(Integer.valueOf(aleatoryItemBin2));
+							bin3.add(aleatoryItemBin2);
+							
+							foundBin = true;
+							break searchForBins;
 						}
 					}
-				}	
+					
+				}
 			}
 		}
-		return res;
+		
+		if(foundBin) {
+			return res;
+		} else {
+			return null;
+		}
 	}
+	
+	
 	
 	private static int sum(List<Integer> list) {
 	     int sum = 0; 
