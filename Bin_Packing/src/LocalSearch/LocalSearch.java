@@ -36,11 +36,11 @@ public class LocalSearch {
 		// Gera solucao inicial
 		generateInitialSolution();
 		
-		// Até a solução atual não poder sofrer melhora
+		// Atï¿½ a soluï¿½ï¿½o atual nï¿½o poder sofrer melhora
 		while(terminal_condition != READY) {
-			// Aplica vizinhanças à solução atual
+			// Aplica vizinhanï¿½as ï¿½ soluï¿½ï¿½o atual
 			applyNeighborhood();
-			// Classifica as soluções geradas e a solução atual
+			// Classifica as soluï¿½ï¿½es geradas e a soluï¿½ï¿½o atual
 			classifySolutions();
 		}
 		
@@ -50,29 +50,29 @@ public class LocalSearch {
 	private void generateInitialSolution() {
 		// Ordenar os itens inicias em ordem decrescente de peso
 		Collections.sort(items, Collections.reverseOrder());
-		// Gerar uma solução inicial com FirstFit
+		// Gerar uma soluï¿½ï¿½o inicial com FirstFit
 		main_solution = Packing.FirstFit_LS(items, this.binMaxCapacity);
 	}
 	
 	private void applyNeighborhood() {
 		List<List<Integer>> main_solution_copy = new ArrayList<List<Integer>>(main_solution);
 		
-		// Aplicar vizinhança Troca 1-1
-		List<List<Integer>> neighbor_1= Vizinhancas.exchange1(main_solution_copy);
+		// Aplicar vizinhanï¿½a Troca 1-1
+		List<List<Integer>> neighbor_1= Vizinhancas.exchange1(main_solution_copy, binMaxCapacity);
 		neighbor_1 = Packing.Realocate_LS(neighbor_1, binMaxCapacity);
-		// Aplicar vizinhança Troca 2-0A
+		// Aplicar vizinhanï¿½a Troca 2-0A
 		List<List<Integer>> neighbor_2= Vizinhancas.exchange2_A(main_solution_copy, binMaxCapacity);
 		neighbor_2 = Packing.Realocate_LS(neighbor_2, binMaxCapacity);
-		// Aplicar vizinhança Troca 2-0B
+		// Aplicar vizinhanï¿½a Troca 2-0B
 		List<List<Integer>> neighbor_3= Vizinhancas.exchange2_B(main_solution_copy, binMaxCapacity);
 		neighbor_3 = Packing.Realocate_LS(neighbor_3, binMaxCapacity);
-		// Aplicar vizinhança Troca 2-1
+		// Aplicar vizinhanï¿½a Troca 2-1
 		List<List<Integer>> neighbor_4= Vizinhancas.exchange2_C(main_solution_copy, binMaxCapacity);
 		neighbor_4 = Packing.Realocate_LS(neighbor_4, binMaxCapacity);
-		// Aplicar vizinhança Troca Perturbação
+		// Aplicar vizinhanï¿½a Troca Perturbaï¿½ï¿½o
 		List<List<Integer>> neighbor_5= Vizinhancas.shake(main_solution_copy, binMaxCapacity);
 		neighbor_5 = Packing.Realocate_LS(neighbor_5, binMaxCapacity);
-		// Aplicar vizinhança Troca Reconstrução
+		// Aplicar vizinhanï¿½a Troca Reconstruï¿½ï¿½o
 		List<List<Integer>> neighbor_6= Vizinhancas.restructure(main_solution_copy, binMaxCapacity);
 		neighbor_6 = Packing.Realocate_LS(neighbor_6, binMaxCapacity);
 		
@@ -89,23 +89,23 @@ public class LocalSearch {
 	}
 	
 	private void classifySolutions() {
-		// Agrupa as soluções atuais
+		// Agrupa as soluï¿½ï¿½es atuais
 		List<List<List<Integer>>> solutions = new ArrayList<List<List<Integer>>>();
 		solutions.add(main_solution);
 		solutions.addAll(neighbors);
 		
-		// Ordena as soluções atuais do menor numero de bins para o maior
+		// Ordena as soluï¿½ï¿½es atuais do menor numero de bins para o maior
 		Collections.sort(solutions, new BinsComparator());
 		
-		// Pega a melhor solução (primeira)
+		// Pega a melhor soluï¿½ï¿½o (primeira)
 		List<List<Integer>> bestSolution = solutions.get(0);
 		
-		// Se a melhor solução encontrada é a solução atual, e não algum vizinho
+		// Se a melhor soluï¿½ï¿½o encontrada ï¿½ a soluï¿½ï¿½o atual, e nï¿½o algum vizinho
 		if(bestSolution.equals(main_solution)) {
-			// Então, acaba o problema
+			// Entï¿½o, acaba o problema
 			terminal_condition = READY;
 		} else {
-			// Senão, a solução atual é atualizada para o melhor vizinho e a busca continua
+			// Senï¿½o, a soluï¿½ï¿½o atual ï¿½ atualizada para o melhor vizinho e a busca continua
 			main_solution = bestSolution;
 			totalBins = main_solution.size();
 		}
