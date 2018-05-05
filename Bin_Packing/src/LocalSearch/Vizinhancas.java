@@ -6,6 +6,14 @@ import java.util.Random;
 
 public class Vizinhancas {
 	
+	// FIXME: O algoritmo está implementado errado. Você so esta procurando para 1 item de
+	// 1 bin, ele troca com qualquer outro de outro bin. Mas se nao acontecer essa troca,
+	// voce tem q escolher outro bin aleatorio e testar todas possibilidades novamente.
+	// PORQUE? Vou dar um exemplo, supondo capacidade 10:
+	// [ [10] ,  [1, 9] , [1, 7] ]
+	// Se eu escolher o bin 1 [10], nenhum dos itens dele vai conseguir trocar com nenhum
+	// item dos outros bins, mas eu poderia trocar o 7 com o 9 que daria certo
+	// Por isso temos q voltar a tentar selecionar outro bin e testar todas as possibilidades
 	public static ArrayList<ArrayList<Integer>> exchange1(ArrayList<ArrayList<Integer>> solucao){
 		
 		int itemNum, item, i;
@@ -96,6 +104,7 @@ public class Vizinhancas {
 		ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(solucao);
 		
 		Collections.shuffle(res);
+		
 		for(i=0; i<res.size()-1;i++){
 			bin = res.get(i);
 			ArrayList<Integer> temp = new ArrayList<Integer>(bin);
