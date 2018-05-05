@@ -98,12 +98,12 @@ public class Vizinhancas {
 		return res;
 	}
 	
-	public static ArrayList<ArrayList<Integer>> exchange2_A(ArrayList<ArrayList<Integer>> solucao, Integer binMaxCapacity){
+	public static List<List<Integer>> exchange2_A(List<List<Integer>> solucao, Integer binMaxCapacity){
 		
 		int itemsNum[];
 		int binNum, item1, item2, i;
-		ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(solucao);
-		ArrayList<ArrayList<Integer>> solucao_aux = new ArrayList<ArrayList<Integer>>(solucao);
+		List<List<Integer>> res = new ArrayList<List<Integer>>(solucao);
+		List<List<Integer>> solucao_aux = new ArrayList<List<Integer>>(solucao);
 		Boolean foundBin = false;
 		Random random = new Random();
 		
@@ -112,9 +112,9 @@ public class Vizinhancas {
 		while((solucao_aux.size() > 0) || (foundBin == false)) {
 			// Escolhe um bin aleatório C
 			Integer aleatoryBinNumber = random.nextInt(solucao_aux.size());
-			ArrayList<Integer> aleatoryBin = solucao_aux.get(aleatoryBinNumber);
+			List<Integer> aleatoryBin = solucao_aux.get(aleatoryBinNumber);
 			solucao_aux.remove(aleatoryBin);
-			ArrayList<Integer> aleatoryBinInSolution = res.get(res.indexOf(aleatoryBin));
+			List<Integer> aleatoryBinInSolution = res.get(res.indexOf(aleatoryBin));
 			
 			// Escolhe dois itens aleatórios A e B do bin C
 			itemsNum = random.ints(0, aleatoryBin.size()).distinct().limit(2).toArray();
@@ -124,7 +124,7 @@ public class Vizinhancas {
 			Integer itemsWeigth = item1 + item2;
 			
 			// Para todos os outros bins
-			for(ArrayList<Integer> bin: res) {
+			for(List<Integer> bin: res) {
 				if(aleatoryBinInSolution != bin) {
 					Integer weightInActualBin = bin.stream().mapToInt(Integer::intValue).sum();
 					
@@ -149,12 +149,12 @@ public class Vizinhancas {
 		}
 	}
 	
-	public static ArrayList<ArrayList<Integer>> exchange2_B(ArrayList<ArrayList<Integer>> solucao, Integer binMaxCapacity){
+	public static List<List<Integer>> exchange2_B(List<List<Integer>> solucao, Integer binMaxCapacity){
 		int itemsNum[];
 		int binNum, item1, item2, i;
-		ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(solucao);
+		List<List<Integer>> res = new ArrayList<List<Integer>>(solucao);
 		
-		ArrayList<ArrayList<Integer>> solucao_aux = new ArrayList<ArrayList<Integer>>(solucao);
+		List<List<Integer>> solucao_aux = new ArrayList<List<Integer>>(solucao);
 		Boolean foundBin = false;
 		Random random = new Random();
 		
@@ -165,9 +165,9 @@ public class Vizinhancas {
 		while((solucao_aux.size() > 0) || (foundBin == false)) {
 			// Escolhe um bin aleatório C
 			Integer aleatoryBinNumber = random.nextInt(solucao_aux.size());
-			ArrayList<Integer> aleatoryBin = solucao_aux.get(aleatoryBinNumber);
+			List<Integer> aleatoryBin = solucao_aux.get(aleatoryBinNumber);
 			solucao_aux.remove(aleatoryBin);
-			ArrayList<Integer> aleatoryBinInSolution = res.get(res.indexOf(aleatoryBin));
+			List<Integer> aleatoryBinInSolution = res.get(res.indexOf(aleatoryBin));
 
 			// Escolhe dois itens aleatórios A e B desse bin C
 			itemsNum = random.ints(0, aleatoryBin.size()).distinct().limit(2).toArray();
@@ -176,7 +176,7 @@ public class Vizinhancas {
 						
 			searchForBins: {
 				// Para todos os outros bins
-				for(ArrayList<Integer> bin1: res) {	
+				for(List<Integer> bin1: res) {	
 					if((aleatoryBinInSolution != bin1)) {
 						Integer weightInActualBin1 = bin1.stream().mapToInt(Integer::intValue).sum();
 						
@@ -191,10 +191,10 @@ public class Vizinhancas {
 							break searchForBins;
 						}
 						
-						List<ArrayList<Integer>> others = res.subList(res.indexOf(bin1) + 1, res.size());
+						List<List<Integer>> others = res.subList(res.indexOf(bin1) + 1, res.size());
 						
 						// Para todos os outros bins a partir do bin atual
-						for(ArrayList<Integer> bin2: others) {
+						for(List<Integer> bin2: others) {
 							if(aleatoryBinInSolution != bin2) {
 								Integer weightInActualBin2 = bin2.stream().mapToInt(Integer::intValue).sum();
 								
@@ -232,11 +232,12 @@ public class Vizinhancas {
 		}
 	}
 	
-	public static ArrayList<ArrayList<Integer>> exchange2_C(ArrayList<ArrayList<Integer>> solucao, Integer binMaxCapacity){
+	
+	public static List<List<Integer>> exchange2_C(List<List<Integer>> solucao, Integer binMaxCapacity){
 		int itemsNum[];
 		int binNum, item1, item2, i;
-		ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(solucao);		
-		ArrayList<ArrayList<Integer>> solucao_aux = new ArrayList<ArrayList<Integer>>(solucao);
+		List<List<Integer>> res = new ArrayList<List<Integer>>(solucao);		
+		List<List<Integer>> solucao_aux = new ArrayList<List<Integer>>(solucao);
 		Boolean foundBin = false;
 		Random random = new Random();
 		
@@ -246,9 +247,9 @@ public class Vizinhancas {
 		while((solucao_aux.size() > 0) || (foundBin == false)) {
 			// Escolhe um bin aleatório C
 			Integer aleatoryBinNumber = random.nextInt(solucao_aux.size());
-			ArrayList<Integer> aleatoryBin = solucao_aux.get(aleatoryBinNumber);
+			List<Integer> aleatoryBin = solucao_aux.get(aleatoryBinNumber);
 			solucao_aux.remove(aleatoryBin);
-			ArrayList<Integer> aleatoryBinInSolution = res.get(res.indexOf(aleatoryBin));
+			List<Integer> aleatoryBinInSolution = res.get(res.indexOf(aleatoryBin));
 			
 			Integer weightInAleatoryBin = aleatoryBin.stream().mapToInt(Integer::intValue).sum();
 			
@@ -260,7 +261,7 @@ public class Vizinhancas {
 			Integer itemsWeigth = item1 + item2;
 			
 			// Para todos os outros bins
-			for(ArrayList<Integer> bin: res) {
+			for(List<Integer> bin: res) {
 				if(aleatoryBinInSolution != bin) {
 					// Escolhe um item aleatório E desse bin D
 					Integer aleatoryItemNumber = random.nextInt(bin.size());
@@ -291,9 +292,9 @@ public class Vizinhancas {
 		}
 	}
 	
-	public static ArrayList<ArrayList<Integer>> shake(ArrayList<ArrayList<Integer>> solucao, Integer binMaxCapacity){
+	public static List<List<Integer>> shake(List<List<Integer>> solucao, Integer binMaxCapacity){
 		int itemNum, item, i, item2Num, j;
-		ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(solucao);
+		List<List<Integer>> res = new ArrayList<List<Integer>>(solucao);
 		Boolean foundBin = false;
 		Random random = new Random();
 		Integer aleatoryItemNumber;
@@ -302,21 +303,21 @@ public class Vizinhancas {
 		// para todos os itens de todos os bins
 		searchForBins: {
 			// Para todos os bins do primeiro ao antipenúltimo da lista
-			for(ArrayList<Integer> bin1: res.subList(0, res.size() - 2)) {
+			for(List<Integer> bin1: res.subList(0, res.size() - 2)) {
 				// Escolhe um item aleatório
 				aleatoryItemNumber = random.nextInt(bin1.size());
 				Integer aleatoryItemBin1 = bin1.get(aleatoryItemNumber);
 				Integer weightInActualBin1 = bin1.stream().mapToInt(Integer::intValue).sum();
 												
 				// Para todos os bins do bin seguinte ao bin1 até o penúltimo
-				for(ArrayList<Integer> bin2: res.subList(res.indexOf(bin1) + 1, res.size() - 1)) {
+				for(List<Integer> bin2: res.subList(res.indexOf(bin1) + 1, res.size() - 1)) {
 					// Escolhe um item aleatório
 					aleatoryItemNumber = random.nextInt(bin2.size());
 					Integer aleatoryItemBin2 = bin2.get(aleatoryItemNumber);
 					Integer weightInActualBin2 = bin2.stream().mapToInt(Integer::intValue).sum();
 												
 					// Para todos os bins do bin seguinte ao bin2 até o último
-					for(ArrayList<Integer> bin3: res.subList(res.indexOf(bin2) + 1, res.size())) {
+					for(List<Integer> bin3: res.subList(res.indexOf(bin2) + 1, res.size())) {
 						Integer weightInActualBin3 = bin3.stream().mapToInt(Integer::intValue).sum();
 						
 						// Tenta simultâneamente colocar o item sorteado do bin2 no bin3
@@ -344,17 +345,17 @@ public class Vizinhancas {
 		}
 	}
 	
-	public static ArrayList<ArrayList<Integer>> restructure(ArrayList<ArrayList<Integer>> solucao, Integer binMaxCapacity){
-		ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(solucao);
+	public static List<List<Integer>> restructure(List<List<Integer>> solucao, Integer binMaxCapacity){
+		List<List<Integer>> res = new ArrayList<List<Integer>>(solucao);
 		Random random = new Random();
-		ArrayList<Integer> binMoreFreeSpace;
+		List<Integer> binMoreFreeSpace;
 		Integer weightBinMoreFreeSpace = Integer.MAX_VALUE;
-		ArrayList<Integer> remainingItems = new ArrayList<Integer>();
+		List<Integer> remainingItems = new ArrayList<Integer>();
 		Integer maxTries = 100;
 		Integer tries = 0;
 		
 		// Encontrar o bin com mais espaço vazio
-		for(ArrayList<Integer> bin: res) {
+		for(List<Integer> bin: res) {
 			Integer weightInActualBin = bin.stream().mapToInt(Integer::intValue).sum();
 			if(weightInActualBin < weightBinMoreFreeSpace) {
 				weightBinMoreFreeSpace = weightInActualBin;
@@ -370,7 +371,7 @@ public class Vizinhancas {
 		
 		// Remover 20% dos itens de todos os outros bins
 		// (arrendondando para baixo caso o número de itens seja quebrado)
-		for(ArrayList<Integer> bin: res) {
+		for(List<Integer> bin: res) {
 			if(bin != binMoreFreeSpace) {
 				Double aux = Math.floor(Double.valueOf(bin.size())*20/100);
 				Integer numberOrItemsToRemove = aux.intValue();
@@ -388,7 +389,7 @@ public class Vizinhancas {
 			tries += 1;
 			Collections.shuffle(remainingItems);
 			for(Integer item: remainingItems) {
-				for(ArrayList<Integer> bin: res) {
+				for(List<Integer> bin: res) {
 					Integer weightInActualBin = bin.stream().mapToInt(Integer::intValue).sum();
 					if((weightInActualBin + item) <= binMaxCapacity) {
 						bin.add(item);
@@ -405,6 +406,8 @@ public class Vizinhancas {
 			return res;
 		}
 	}
+	
+	
 	
 	private static int sum(List<Integer> list) {
 	     int sum = 0; 

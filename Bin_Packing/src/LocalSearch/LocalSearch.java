@@ -56,17 +56,17 @@ public class LocalSearch {
 		List<List<Integer>> main_solution_copy = new ArrayList<List<Integer>>(main_solution);
 		
 		// Aplicar vizinhança Troca 1-1
-		List<List<Integer>> neighbor_1= exchange1(main_solution_copy);
+		List<List<Integer>> neighbor_1= Vizinhancas.exchange1(main_solution_copy);
 		// Aplicar vizinhança Troca 2-0A
-		List<List<Integer>> neighbor_2= exchange2_A(main_solution_copy);
+		List<List<Integer>> neighbor_2= Vizinhancas.exchange2_A(main_solution_copy, binMaxCapacity);
 		// Aplicar vizinhança Troca 2-0B
-		List<List<Integer>> neighbor_3= exchange2_B(main_solution_copy);
+		List<List<Integer>> neighbor_3= Vizinhancas.exchange2_B(main_solution_copy, binMaxCapacity);
 		// Aplicar vizinhança Troca 2-1
-		List<List<Integer>> neighbor_4= exchange2_C(main_solution_copy);
+		List<List<Integer>> neighbor_4= Vizinhancas.exchange2_C(main_solution_copy, binMaxCapacity);
 		// Aplicar vizinhança Troca Perturbação
-		List<List<Integer>> neighbor_5= shake(main_solution_copy);
+		List<List<Integer>> neighbor_5= Vizinhancas.shake(main_solution_copy, binMaxCapacity);
 		// Aplicar vizinhança Troca Reconstrução
-		List<List<Integer>> neighbor_6= restructure(main_solution_copy);
+		List<List<Integer>> neighbor_6= Vizinhancas.restructure(main_solution_copy, binMaxCapacity);
 		
 		// Limpar lista de vizinhos
 		neighbors.clear();
