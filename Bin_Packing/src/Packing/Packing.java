@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import LocalSearch.LocalSearch.BinsComparator;
-
 public class Packing {
 
 	
