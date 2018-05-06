@@ -350,18 +350,22 @@ public class Vizinhancas {
 			}
 		}
 		
+		List<Integer> notRealocatedItems = new ArrayList<Integer>(remainingItems);
+		
 		// At� encontrar uma configuracao encaixando nos bins todos os itens retirados
 		// Ou estourar o n�mero de iteracoes
-		while((remainingItems.size() > 0) && (tries < maxTries)) {
+		while((notRealocatedItems.size() > 0) && (tries < maxTries)) {
 			tries += 1;
 			Collections.shuffle(remainingItems);
 			for(Integer item: remainingItems) {
-				for(List<Integer> bin: res) {
-					Integer weightInActualBin = bin.stream().mapToInt(Integer::intValue).sum();
-					if((weightInActualBin + item) <= binMaxCapacity) {
-						bin.add(item);
-						remainingItems.remove(Integer.valueOf(item));
-						break;
+				if(notRealocatedItems.contains(Integer.valueOf(item))) {					
+					for(List<Integer> bin: res) {
+						Integer weightInActualBin = bin.stream().mapToInt(Integer::intValue).sum();
+						if((weightInActualBin + item) <= binMaxCapacity) {
+							bin.add(item);
+							notRealocatedItems.remove(Integer.valueOf(item));
+							break;
+						}
 					}
 				}
 			}
