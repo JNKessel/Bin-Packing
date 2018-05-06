@@ -33,6 +33,7 @@ public class LocalSearch {
 		// Gera solucao inicial
 		generateInitialSolution();
 		
+		terminal_condition = NOT_READY;
 		// At� a solu��o atual n�o poder sofrer melhora
 		while(terminal_condition != READY) {
 			// Aplica vizinhan�as � solu��o atual
@@ -119,6 +120,7 @@ public class LocalSearch {
 		if(bestSolution.equals(main_solution)) {
 			// Ent�o, acaba o problema
 			terminal_condition = READY;
+			totalBins = main_solution.size();
 		} else {
 			// Sen�o, a solu��o atual � atualizada para o melhor vizinho e a busca continua
 			main_solution = bestSolution;
