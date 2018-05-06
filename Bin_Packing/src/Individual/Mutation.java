@@ -42,18 +42,33 @@ public class Mutation {
 	}
 
 	
-	public static List<Integer> Two_Opt(List<Integer> pai) {
+	public static List<Integer> Scramble(List<Integer> pai) {
 
 		int tam = pai.size();
 		RandomIntervalo(tam);
 		List<Integer> res = new ArrayList<Integer>(pai);
 
-		int n = 25;
+		int n = 15;
 				
 		for(int i=0; i < n; i++) {
 			int ri1 = ThreadLocalRandom.current().nextInt(r1, r2+1);
 			int ri2 = ThreadLocalRandom.current().nextInt(r1, r2+1);
 			
+			int aux = res.get(ri1);
+			res.set(ri1, res.get(ri2));
+			res.set(ri2, aux);
+		}
+		
+		return res;
+	}
+	
+	public static List<Integer> Two_Opt(List<Integer> pai) {
+
+		int tam = pai.size();
+		RandomIntervalo(tam);
+		List<Integer> res = new ArrayList<Integer>(pai);
+		
+		for(int ri1 = r1, ri2 = r2 ; ri1 < ri2 ; ri1++, ri2--) {
 			int aux = res.get(ri1);
 			res.set(ri1, res.get(ri2));
 			res.set(ri2, aux);
