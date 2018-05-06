@@ -1,6 +1,3 @@
-package LocalSearch;
-
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -70,6 +67,10 @@ public class Vizinhancas {
 			solucao_aux.remove(aleatoryBin);
 			List<Integer> aleatoryBinInSolution = res.get(res.indexOf(aleatoryBin));
 			
+			if(aleatoryBin.size() < 2){
+				continue;
+			}
+			
 			// Escolhe dois itens aleat�rios A e B do bin C
 			itemsNum = random.ints(0, aleatoryBin.size()).distinct().limit(2).toArray();
 			
@@ -124,6 +125,10 @@ public class Vizinhancas {
 			List<Integer> aleatoryBin = solucao_aux.get(aleatoryBinNumber);
 			solucao_aux.remove(aleatoryBin);
 			List<Integer> aleatoryBinInSolution = res.get(res.indexOf(aleatoryBin));
+			
+			if(aleatoryBin.size() < 2){
+				continue;
+			}
 
 			// Escolhe dois itens aleat�rios A e B desse bin C
 			itemsNum = random.ints(0, aleatoryBin.size()).distinct().limit(2).toArray();
@@ -206,6 +211,10 @@ public class Vizinhancas {
 			List<Integer> aleatoryBin = solucao_aux.get(aleatoryBinNumber);
 			solucao_aux.remove(aleatoryBin);
 			List<Integer> aleatoryBinInSolution = res.get(res.indexOf(aleatoryBin));
+			
+			if(aleatoryBin.size() < 2){
+				continue;
+			}
 			
 			Integer weightInAleatoryBin = aleatoryBin.stream().mapToInt(Integer::intValue).sum();
 			
