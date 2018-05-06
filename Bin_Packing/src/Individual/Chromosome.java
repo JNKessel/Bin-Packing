@@ -27,7 +27,7 @@ public class Chromosome {
 			chromosome = (Mutation.Realocate(chromosome));
 		}else if(type == 2){
 			chromosome = (Mutation.Swap(chromosome));
-		}else{
+		}else if(type == 3){
 			chromosome = (Mutation.Two_Opt(chromosome));
 		}
 	}

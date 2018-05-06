@@ -15,6 +15,9 @@ public class GeneticAlgorithm {
 	private Integer NOT_READY = 0;
 	private Integer FIRST_FIT = 1;
 	private Integer NEXT_FIT = 2;
+	private Integer REALOCATE = 1;
+	private Integer SWAP = 2;
+	private Integer TWO_OPT = 3;
 
 	private static HashMap<String, Integer> mapItems = new HashMap<String, Integer>();
 	private Integer terminal_condition = NOT_READY;
@@ -236,7 +239,8 @@ public class GeneticAlgorithm {
 			// Recombinar pais
 			Individuo parent1 = pair_parents.get(0);
 			Individuo parent2 = pair_parents.get(1);
-			List<Individuo> pair_children = parent1.generateChild(parent2, mutationChance, 1);
+			// Usar para mutacao: RELOCATE, SWAP ou TWO_OPT
+			List<Individuo> pair_children = parent1.generateChild(parent2, mutationChance, REALOCATE);
 			// Adicionar os filhos gerados a lista final de filhos
 			for (Individuo child : pair_children) {
 				children.add(child);
