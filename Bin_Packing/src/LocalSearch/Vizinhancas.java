@@ -1,5 +1,3 @@
-package LocalSearch;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,9 +9,9 @@ public class Vizinhancas {
 		
 		int itemNum, item, i, somaBin1, somaBin2, bin1Num;
 		List<Integer> bin1, bin1Temp;
-		List<List<Integer>> res = new ArrayList<List<Integer>>(solucao);
-		
-		List<List<Integer>> temp = new ArrayList<List<Integer>>(solucao);
+
+		List<List<Integer>> res = Packing.cloneStructure(solucao);
+		List<List<Integer>> temp = Packing.cloneStructure(solucao);
 		for(i=0; i<res.size();i++){
 			
 			bin1Num = new Random().nextInt(temp.size());
@@ -54,8 +52,8 @@ public class Vizinhancas {
 		
 		int itemsNum[];
 		int binNum, item1, item2, i;
-		List<List<Integer>> res = new ArrayList<List<Integer>>(solucao);
-		List<List<Integer>> solucao_aux = new ArrayList<List<Integer>>(solucao);
+		List<List<Integer>> res = Packing.cloneStructure(solucao);
+		List<List<Integer>> solucao_aux = Packing.cloneStructure(solucao);
 		Boolean foundBin = false;
 		Random random = new Random();
 		
@@ -111,9 +109,9 @@ public class Vizinhancas {
 	public static List<List<Integer>> exchange2_B(List<List<Integer>> solucao, Integer binMaxCapacity){
 		int itemsNum[];
 		int binNum, item1, item2, i;
-		List<List<Integer>> res = new ArrayList<List<Integer>>(solucao);
-		
-		List<List<Integer>> solucao_aux = new ArrayList<List<Integer>>(solucao);
+
+		List<List<Integer>> res = Packing.cloneStructure(solucao);
+		List<List<Integer>> solucao_aux = Packing.cloneStructure(solucao);
 		Boolean foundBin = false;
 		Random random = new Random();
 		
@@ -199,8 +197,9 @@ public class Vizinhancas {
 	public static List<List<Integer>> exchange2_C(List<List<Integer>> solucao, Integer binMaxCapacity){
 		int itemsNum[];
 		int binNum, item1, item2, i;
-		List<List<Integer>> res = new ArrayList<List<Integer>>(solucao);		
-		List<List<Integer>> solucao_aux = new ArrayList<List<Integer>>(solucao);
+
+		List<List<Integer>> res = Packing.cloneStructure(solucao);
+		List<List<Integer>> solucao_aux = Packing.cloneStructure(solucao);
 		Boolean foundBin = false;
 		Random random = new Random();
 		
@@ -261,7 +260,8 @@ public class Vizinhancas {
 	
 	public static List<List<Integer>> shake(List<List<Integer>> solucao, Integer binMaxCapacity){
 		int itemNum, item, i, item2Num, j;
-		List<List<Integer>> res = new ArrayList<List<Integer>>(solucao);
+		
+		List<List<Integer>> res = Packing.cloneStructure(solucao);
 		Boolean foundBin = false;
 		Random random = new Random();
 		Integer aleatoryItemNumber;
@@ -313,7 +313,8 @@ public class Vizinhancas {
 	}
 	
 	public static List<List<Integer>> restructure(List<List<Integer>> solucao, Integer binMaxCapacity){
-		List<List<Integer>> res = new ArrayList<List<Integer>>(solucao);
+		
+		List<List<Integer>> res = Packing.cloneStructure(solucao);
 		Random random = new Random();
 		List<Integer> binMoreFreeSpace = new ArrayList<Integer>();;
 		Integer weightBinMoreFreeSpace = Integer.MAX_VALUE;
