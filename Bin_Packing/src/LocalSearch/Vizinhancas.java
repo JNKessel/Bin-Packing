@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import Packing.Packing;
+
 public class Vizinhancas {
 	
 	public static List<List<Integer>> exchange1(List<List<Integer>> solucao, Integer binMaxCapacity){

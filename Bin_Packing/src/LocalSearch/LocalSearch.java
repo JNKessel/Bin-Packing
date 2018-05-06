@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Packing.Packing;
+
 
 public class LocalSearch {
 	private Integer totalBins;
