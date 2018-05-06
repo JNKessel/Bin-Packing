@@ -1,4 +1,3 @@
-package LocalSearch;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,24 +17,20 @@ public class Vizinhancas {
 	public static List<List<Integer>> exchange1(List<List<Integer>> solucao, Integer binMaxCapacity){
 		
 		int itemNum, item, i, somaBin1, somaBin2, bin1Num;
-		List<Integer> bin1;
+		List<Integer> bin1, bin1Temp;
 		List<List<Integer>> res = new ArrayList<List<Integer>>(solucao);
 		
-		List<List<Integer>> temp = res;
+		List<List<Integer>> temp = new ArrayList<List<Integer>>(solucao);
 		for(i=0; i<res.size();i++){
 			
 			bin1Num = new Random().nextInt(temp.size());
-			bin1 = temp.get(i);
+			bin1Temp = temp.get(bin1Num);
 			temp.remove(bin1Num);
+			bin1 = res.get(res.indexOf(bin1Temp));
 			
 			somaBin1 = sum(bin1);
 			
-			// FIXME: O m�todo Random().nextInt(N) em Java seleciona num n�mero random
-			// entre 0 (inclusivo) a N (exclusivo). Ent�o, se vc escolhe N = 50, ele vai
-			// selecionar um n�mero de 0-49.
-			// Se voce quer escolher um item random de um bin, vc tem que escolher um
-			// n�mero de 0-(bin.size() - 1) mas na funcao vc poe Random().nextInt(bin.size())
-			itemNum = new Random().nextInt(bin1.size() - 1);
+			itemNum = new Random().nextInt(bin1.size());
 			
 			item = bin1.get(itemNum);
 			
@@ -109,7 +104,8 @@ public class Vizinhancas {
 		
 		// At� conseguir encaixar os itens aleat�rios A e B de um bin aleat�rio C em
 		// um bin D ou at� acabarem os bins sorteados
-		while((solucao_aux.size() > 0) || (foundBin == false)) {
+		while((solucao_aux.size() > 0) && (foundBin == false)) {
+			
 			// Escolhe um bin aleat�rio C
 			Integer aleatoryBinNumber = random.nextInt(solucao_aux.size());
 			List<Integer> aleatoryBin = solucao_aux.get(aleatoryBinNumber);
@@ -118,6 +114,7 @@ public class Vizinhancas {
 			
 			// Escolhe dois itens aleat�rios A e B do bin C
 			itemsNum = random.ints(0, aleatoryBin.size()).distinct().limit(2).toArray();
+			
 			item1 = aleatoryBin.get(itemsNum[0]);
 			item2 = aleatoryBin.get(itemsNum[1]);
 			
@@ -125,6 +122,7 @@ public class Vizinhancas {
 			
 			// Para todos os outros bins
 			for(List<Integer> bin: res) {
+				
 				if(aleatoryBinInSolution != bin) {
 					Integer weightInActualBin = bin.stream().mapToInt(Integer::intValue).sum();
 					
@@ -162,7 +160,7 @@ public class Vizinhancas {
 		// um bin D ou um item para um bin D e o outro item para um bin E ou acabarem
 		// os bins sorteados
 		// OBS: N�o testa todas as possibilidades devido ao sorteio dos itens no bin
-		while((solucao_aux.size() > 0) || (foundBin == false)) {
+		while((solucao_aux.size() > 0) && (foundBin == false)) {
 			// Escolhe um bin aleat�rio C
 			Integer aleatoryBinNumber = random.nextInt(solucao_aux.size());
 			List<Integer> aleatoryBin = solucao_aux.get(aleatoryBinNumber);
@@ -244,7 +242,7 @@ public class Vizinhancas {
 		// At� conseguir encaixar dois itens aleat�rios A e B de um bin aleat�rio C em um outro
 		// bin D, e um item aleat�rio E desse bin D no bin C ou at� acabarem os bins sorteados
 		// OBS: N�o testa todas as possibilidades devido ao sorteio dos itens nos bins
-		while((solucao_aux.size() > 0) || (foundBin == false)) {
+		while((solucao_aux.size() > 0) && (foundBin == false)) {
 			// Escolhe um bin aleat�rio C
 			Integer aleatoryBinNumber = random.nextInt(solucao_aux.size());
 			List<Integer> aleatoryBin = solucao_aux.get(aleatoryBinNumber);
