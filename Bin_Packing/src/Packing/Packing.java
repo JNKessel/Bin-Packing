@@ -1,4 +1,5 @@
 package Packing;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -90,7 +91,8 @@ public class Packing {
 	}
 	
 	public static List<List<Integer>> Realocate_LS (List<List<Integer>> solution, int binMaxCapacity) {
-		List<List<Integer>> better_solution = cloneStructure(solution);
+		
+		List<List<Integer>> better_solution = Packing.cloneStructure(solution);
 		List<List<Integer>> aux1;
 		List<List<Integer>> aux2;
 		Boolean retry = true;
