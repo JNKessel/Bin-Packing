@@ -1,3 +1,5 @@
+package LocalSearch;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -230,16 +232,16 @@ public class Vizinhancas {
 			for(List<Integer> bin: res) {
 				if(aleatoryBinInSolution != bin) {
 					// Escolhe um item aleat�rio E desse bin D
-					Integer aleatoryItemNumber = random.nextInt(bin.size());
+					int aleatoryItemNumber = random.nextInt(bin.size());
 					Integer aleatoryItem = bin.get(aleatoryItemNumber);
 					Integer weightInActualBin = bin.stream().mapToInt(Integer::intValue).sum();
 					
 					// Tenta encaixar os itens A e B no bin D e o item E no bin C
 					if(((weightInActualBin - aleatoryItem + itemsWeigth) <= binMaxCapacity) &&
 						(weightInAleatoryBin - itemsWeigth + aleatoryItem <= binMaxCapacity)) {
+						bin.remove(aleatoryItemNumber);
 						bin.add(item1);
 						bin.add(item2);
-						bin.remove(aleatoryItemNumber);
 						aleatoryBinInSolution.add(aleatoryItem);
 						aleatoryBinInSolution.remove(Integer.valueOf(item1));
 						aleatoryBinInSolution.remove(Integer.valueOf(item2));
