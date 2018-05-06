@@ -92,39 +92,71 @@ public class Packing {
 	}
 	
 	public static List<List<Integer>> Realocate_LS (List<List<Integer>> solution, int binMaxCapacity) {
-		List<List<Integer>> better_solution = new ArrayList<List<Integer>>(solution);
-		List<List<Integer>> aux1 = new ArrayList<List<Integer>>(solution);
-		List<List<Integer>> aux2 = new ArrayList<List<Integer>>(solution);
+		List<List<Integer>> better_solution = cloneStructure(solution);
+		List<List<Integer>> aux1;
+		List<List<Integer>> aux2;
+		Boolean retry = true;
+		Integer last = better_solution.size();
 		
-		// Ordena os bins por ordem crescente de peso / ordem descrescente de espaço livre
-		Collections.sort(aux1, new WeightComparator());
-		// Ordena os bins por ordem decrescente de peso / ordem crescente de espaço livre
-		Collections.sort(aux2, new ReverseWeightComparator());
-		
-		// Para todos os bins começando do que tem mais espaço livre para o que tem menos espaço livre
-		for(List<Integer> bin1: aux1) {
-			// Para todos os itens desse bin
-			for(Integer itemInBin1: bin1) {
-				// Para todos os bins começando do que está mais cheio para o que está mais vazio
-				for(List<Integer> bin2: aux2) {
-					// Confere se nao é o mesmo bin
-					if(bin1 != bin2) {
-						Integer weightInBin2 = bin2.stream().mapToInt(Integer::intValue).sum();
-						// Tenta encaixar o item do bin mais vazio no bin mais cheio
-						if((weightInBin2 + itemInBin1) <= binMaxCapacity) {
-							List<Integer> Bin1InSolution = better_solution.get(better_solution.indexOf(bin1));
-							List<Integer> Bin2InSolution = better_solution.get(better_solution.indexOf(bin2));
-							Bin1InSolution.remove(Integer.valueOf(itemInBin1));
-							Bin2InSolution.add(itemInBin1);
-							
-							break;
+		while(retry) {
+			aux1 = cloneStructure(better_solution);
+			aux2 = cloneStructure(better_solution);
+			// Ordena os bins por ordem crescente de peso / ordem descrescente de espaço livre
+			Collections.sort(aux1, new WeightComparator());
+			// Ordena os bins por ordem decrescente de peso / ordem crescente de espaço livre
+			Collections.sort(aux2, new ReverseWeightComparator());
+			
+			search: {
+				// Para todos os bins começando do que tem mais espaço livre para o que tem menos espaço livre
+				for(List<Integer> bin1: aux1) {
+					// Para todos os itens desse bin
+					for(Integer itemInBin1: bin1) {
+						// Para todos os bins começando do que está mais cheio para o que está mais vazio
+						for(List<Integer> bin2: aux2) {
+							// Confere se nao é o mesmo bin
+							if(bin1 != bin2) {
+								Integer weightInBin2 = bin2.stream().mapToInt(Integer::intValue).sum();
+								// Tenta encaixar o item do bin mais vazio no bin mais cheio
+								if((weightInBin2 + itemInBin1) <= binMaxCapacity) {
+									List<Integer> Bin1InSolution = better_solution.get(better_solution.indexOf(bin1));
+									List<Integer> Bin2InSolution = better_solution.get(better_solution.indexOf(bin2));
+									Bin1InSolution.remove(Integer.valueOf(itemInBin1));
+									if(Bin1InSolution.size() == 0) {
+										better_solution.remove(Bin1InSolution);
+									}
+									Bin2InSolution.add(itemInBin1);
+									
+									if(better_solution.size() < last) {
+										last = better_solution.size();
+									} else {
+										retry = false;
+									}
+									break search;
+								}
+							}
 						}
 					}
 				}
+				
+				retry = false;
 			}
 		}
 		
 		return better_solution;
+	}
+	
+	public static List<List<Integer>> cloneStructure(List<List<Integer>> list) {
+		List<List<Integer>> list_clone = new ArrayList<List<Integer>>();
+		for(List<Integer> element: list) {
+			List<Integer> element_clone = new ArrayList<Integer>();
+			for(Integer i: element) {
+				element_clone.add(i);
+			}
+			System.out.println(element);
+			System.out.println(element_clone);
+			list_clone.add(element_clone);
+		}
+		return list_clone;
 	}
 	
 	// Compara o peso dos bins (menor ganha)
@@ -146,5 +178,23 @@ public class Packing {
 	        return -weight_o1.compareTo(weight_o2);
 	    }
 	}
+	
+//	public static void main(String[] args) {
+//		List<List<Integer>> solution = new ArrayList<List<Integer>>();
+//		List<Integer> list = new ArrayList<Integer>();
+//		list.add(5);
+//		list.add(4);
+//		List<Integer> list1 = new ArrayList<Integer>();
+//		list1.add(3);
+//		list1.add(3);
+//		List<Integer> list2 = new ArrayList<Integer>();
+//		list2.add(2);
+//		solution.add(list);
+//		solution.add(list1);
+//		solution.add(list2);
+//		System.out.println(solution);
+//		List<List<Integer>> resposta = Realocate_LS(solution, 10);
+//		System.out.println(resposta);
+//	}
 
 }
