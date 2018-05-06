@@ -10,9 +10,9 @@ import java.util.List;
 
 public class Main {
 	private static String[] test_files = {"Falkenauer_t120_01.txt",
-										  "Falkenauer_t60_00.txt",
-										  "Falkenauer_u120_02.txt",
-										  "Falkenauer_u250_04.txt",
+//										  "Falkenauer_t60_00.txt",
+//										  "Falkenauer_u120_02.txt",
+//										  "Falkenauer_u250_04.txt",
 										  "Falkenauer_u500_05.txt"};
 	
     public static void main(String[] args) {

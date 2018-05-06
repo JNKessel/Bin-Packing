@@ -152,8 +152,6 @@ public class Packing {
 			for(Integer i: element) {
 				element_clone.add(i);
 			}
-			System.out.println(element);
-			System.out.println(element_clone);
 			list_clone.add(element_clone);
 		}
 		return list_clone;

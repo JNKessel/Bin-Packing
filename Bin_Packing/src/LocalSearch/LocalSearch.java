@@ -42,6 +42,8 @@ public class LocalSearch {
 			classifySolutions();
 		}
 		
+		System.out.println("Main Solution:" + main_solution);
+		
 		return totalBins;
 	}
 	
