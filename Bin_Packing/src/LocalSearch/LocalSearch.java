@@ -7,11 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import GeneticAlgorithm.GeneticAlgorithm.FitnessComparator;
-import Individual.Individuo;
-import Packing.Packing;
-import Packing.Packing.ReverseWeightComparator;
-import Packing.Packing.WeightComparator;
 
 public class LocalSearch {
 	private Integer totalBins;
@@ -59,33 +54,51 @@ public class LocalSearch {
 		
 		// Aplicar vizinhan�a Troca 1-1
 		List<List<Integer>> neighbor_1= Vizinhancas.exchange1(main_solution_copy, binMaxCapacity);
-		neighbor_1 = Packing.Realocate_LS(neighbor_1, binMaxCapacity);
+	
 		// Aplicar vizinhan�a Troca 2-0A
 		List<List<Integer>> neighbor_2= Vizinhancas.exchange2_A(main_solution_copy, binMaxCapacity);
-		neighbor_2 = Packing.Realocate_LS(neighbor_2, binMaxCapacity);
+
 		// Aplicar vizinhan�a Troca 2-0B
 		List<List<Integer>> neighbor_3= Vizinhancas.exchange2_B(main_solution_copy, binMaxCapacity);
-		neighbor_3 = Packing.Realocate_LS(neighbor_3, binMaxCapacity);
+		
 		// Aplicar vizinhan�a Troca 2-1
 		List<List<Integer>> neighbor_4= Vizinhancas.exchange2_C(main_solution_copy, binMaxCapacity);
-		neighbor_4 = Packing.Realocate_LS(neighbor_4, binMaxCapacity);
+	
 		// Aplicar vizinhan�a Troca Perturba��o
 		List<List<Integer>> neighbor_5= Vizinhancas.shake(main_solution_copy, binMaxCapacity);
-		neighbor_5 = Packing.Realocate_LS(neighbor_5, binMaxCapacity);
+
 		// Aplicar vizinhan�a Troca Reconstru��o
 		List<List<Integer>> neighbor_6= Vizinhancas.restructure(main_solution_copy, binMaxCapacity);
-		neighbor_6 = Packing.Realocate_LS(neighbor_6, binMaxCapacity);
+	
 		
 		// Limpar lista de vizinhos
 		neighbors.clear();
 				
 		// Adicionar novos vizinhos
-		neighbors.add(neighbor_1);
-		neighbors.add(neighbor_2);
-		neighbors.add(neighbor_3);
-		neighbors.add(neighbor_4);
-		neighbors.add(neighbor_5);
-		neighbors.add(neighbor_6);
+		if(neighbor_1 != null){
+			neighbor_1 = Packing.Realocate_LS(neighbor_1, binMaxCapacity);
+			neighbors.add(neighbor_1);
+		}
+		if(neighbor_2 != null){
+			neighbor_2 = Packing.Realocate_LS(neighbor_2, binMaxCapacity);
+			neighbors.add(neighbor_2);
+		}
+		if(neighbor_3 != null){
+			neighbor_3 = Packing.Realocate_LS(neighbor_3, binMaxCapacity);
+			neighbors.add(neighbor_3);
+		}
+		if(neighbor_4 != null){
+			neighbor_4 = Packing.Realocate_LS(neighbor_4, binMaxCapacity);
+			neighbors.add(neighbor_4);
+		}
+		if(neighbor_5 != null){
+			neighbor_5 = Packing.Realocate_LS(neighbor_5, binMaxCapacity);
+			neighbors.add(neighbor_5);
+		}
+		if(neighbor_6 != null){
+			neighbor_6 = Packing.Realocate_LS(neighbor_6, binMaxCapacity);
+			neighbors.add(neighbor_6);
+		}
 	}
 	
 	private void classifySolutions() {
