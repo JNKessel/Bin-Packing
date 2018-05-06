@@ -1,3 +1,5 @@
+package LocalSearch;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,14 +8,6 @@ import java.util.Random;
 
 public class Vizinhancas {
 	
-	// FIXME: O algoritmo est� implementado errado. Voc� so esta procurando para 1 item de
-	// 1 bin, ele troca com qualquer outro de outro bin. Mas se nao acontecer essa troca,
-	// voce tem q escolher outro bin aleatorio e testar todas possibilidades novamente.
-	// PORQUE? Vou dar um exemplo, supondo capacidade 10:
-	// [ [10] ,  [1, 9] , [1, 7] ]
-	// Se eu escolher o bin 1 [10], nenhum dos itens dele vai conseguir trocar com nenhum
-	// item dos outros bins, mas eu poderia trocar o 7 com o 9 que daria certo
-	// Por isso temos q voltar a tentar selecionar outro bin e testar todas as possibilidades
 	public static List<List<Integer>> exchange1(List<List<Integer>> solucao, Integer binMaxCapacity){
 		
 		int itemNum, item, i, somaBin1, somaBin2, bin1Num;
@@ -37,47 +31,11 @@ public class Vizinhancas {
 			for(List<Integer> bin2 : res){
 				
 				somaBin2 = sum(bin2);
-				
-				// FIXME: Igual a comparacao que o Marcelo utilizou com Strings == ou != isso
-				// N�O FUNCIONA para Objetos em Java. A comparacao de Objetos em Java � feita
-				// pelo m�todo equals. Ent�o temos q utilizar objeto1.equals(objeto2) para
-				// comparar se os Objetos objeto1 e objeto2 s�o iguais. Para fazer a mesma
-				// comparacao mas para verificar se os Objetos s�o diferentes podemos fazer
-				// !objeto1.equals(objeto2)
+
 				if(bin2 != bin1){
 					
 					for(int itens : bin2){
 						
-						// Vi que voce fez uma funcao para somar os itens em um bin. N�o tem
-						// o menor problema fazer isso, mas se voce tivesse pesquisado, ja
-						// existe em Java uma fun��o pronta para fazer isso.
-						// Para List<Integer> minha_lista:
-						// int sum = minha_lista.stream().mapToInt(Integer::intValue).sum();
-
-						// FIXME: N�o � bom ter uma fun��o de some, mesmo q seja da biblioteca
-						// de Java ou outra coisa sendo refeita 2 vezes em um NESTED FOR.
-						// Isso vai custar mt tempo. Coloca uma vari�vel fora do for pra 
-						// guardar o valor desse (sum(bin) - item) que vc vai usar sempre aqui
-						
-						// FIXME: S� por garantia, coloca parenteses nas condicoes (A) && (B)
-						
-						// FIXME: Esse sum(bins) tamb�m pode ficar numa vari�vel fora deste for
-						// pra evitar o custo de refazer a operacao
-						
-						// FIXME: Se a variavel binSize for a capacidade m�xima de um bin, coloca
-						// um parametro na funcao que eu passo essa variavel pra voce.
-						
-						// N�o precisa desse Integer.valueOf(item) na remoc��o de um item do bin,
-						// mas nao tem problema
-						
-						// FIXME: Assim que voc� acha um bin para trocar os itens, � bom dar um break
-						// para parar o for e evitar o custo de ficar reiterando o for e uma outra
-						// condicao para dar break no outro for tamb�m. Isso � bom tanto para
-						// evitar que o programa continua procurando o bin quando voce ja achou ele
-						// e para evitar que exista outro bin que atenda aos mesmos requisitos
-						// e ai ele vai trocar de novo ate que os fors acabem.
-						// OBS: Fun��es em Java acho q podem retornar mais de uma vez, ele nao
-						// para quando da return igual a liguagem C.
 						if(somaBin1 - item + itens <= binMaxCapacity && somaBin2 - itens + item <= binMaxCapacity){
 							bin1.remove(Integer.valueOf(item));
 							bin1.add(itens);
