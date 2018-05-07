@@ -73,21 +73,22 @@ Para fácil entendimento das estruturas, o vetor de inteiros é chamado de cromo
 FUNCIONAMENTO:
 Primeiro são escolhidos aleatoriamente dois números inteiros que definem os índices do intervalo para a sequência de genes do pai 1 a ser herdada pelo filho.
  
-Figura 1 – Uma sequência do pai 1 é copiada para o filho 
+1 – Uma sequência do pai 1 é copiada para o filho 
 Em seguida, os genes da sequência correspondente ao pai 2 (genes no mesmo intervalo de índices) são verificados para checar se já existem no filho. Caso não exista, é feito o mapeamento desse gene para filho. E, caso exista, desconsidera-se este gene e continua o mapeamento para o próximo gene da sequência.
 O primeiro gene a ser mapeado do pai 2 é o 3, mas como ele já está presente no filho, é desconsiderado. Continua-se então para o segundo gene, 4, que ainda não esta presente no filho. Procura-se o gene correspondente ao gene 4 na mesma posição no pai 1, que é o 6. Encontra-se então o gene 6 no pai 2.
  
-Figura 2 – O gene 4 do pai 2 corresponde ao gene 6 nessa posição no pai 1 e o gene 6 no pai 2 é destacado
+2 – O gene 4 do pai 2 corresponde ao gene 6 nessa posição no pai 1 e o gene 6 no pai 2 é destacado
 Como a posição ocupada pelo gene 6 no pai 2 já está ocupada no filho, repete-se então a operação de mapeamento agora para este gene. O gene correspondente ao gene 6 do pai 2 no pai 1 é o 5. Encontra-se então o gene 5 no pai 2.
  
-Figura 3 – O gene 6 do pai 2 corresponde ao gene 5 nessa posição no pai 1 e o gene 5 no pai 2 é destacado
+3 – O gene 6 do pai 2 corresponde ao gene 5 nessa posição no pai 1 e o gene 5 no pai 2 é destacado
 Como a posição ocupada pelo gene 5 no pai 2 já está ocupada no filho, repete-se então a operação de mapeamento agora para este gene. 
  
-Figura 4 – O gene 5 do pai 2 corresponde ao gene 2 nessa posição no pai 1 e o gene 2 no pai 2 é destacado
+4 – O gene 5 do pai 2 corresponde ao gene 2 nessa posição no pai 1 e o gene 2 no pai 2 é destacado
 Agora que encontramos uma posição livre na estrutura do filho, completamos ela com o gene que se desejava adicionar inicialmente, o gene 4.
 Esse mapeamento continua até que se acabem os genes da sequência de genes do intervalo. E por fim, o filho tem seus genes vazios completos com os genes correspondentes do pai 2 nessas posições.
  
-Figura 5 – O filho tem suas posições vazias completas pelos genes correspondentes no pai 2
+5 – O filho tem suas posições vazias completas pelos genes correspondentes no pai 2
+
 TRATAMENTO DE ITENS REPETIDOS
 Como pode ser visto no funcionamento do método PMX descrito acima, este mapeamento funciona para vetores de inteiros cujos itens são diferentes entre si. No caso de itens repetidos, o mapeamento não funciona porque pode entrar em ciclo.
 Para tratar o mapeamento evitando a repetição de itens, os vetores de inteiros são convertidos em vetores de strings através de um dicionário. Esse dicionário é definido no início do algoritmo genético de acordo com o vetor inicial de itens. Sabendo que esses itens são sempre os mesmos para todos os indivíduos, para cada item é associado uma string do tipo “N” concatenado com o índice correspondente a sua posição no vetor mais 1. Assim, o item1 na posição 0 do vetor inicial corresponde à string “N1”, o item 2 na posição 1 do vetor inicial corresponde a string “N2” e assim por diante.
