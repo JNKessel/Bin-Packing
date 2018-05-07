@@ -18,11 +18,13 @@ public class GeneticAlgorithm {
 	private Integer REALOCATE = 1;
 	private Integer SWAP = 2;
 	private Integer TWO_OPT = 3;
+	private Integer SCRAMBLE = 4;
 
 	private static HashMap<String, Integer> mapItems = new HashMap<String, Integer>();
 	private Integer terminal_condition = NOT_READY;
 	private Integer totalBins;
 	private List<Integer> items;
+	private List<Integer> Best_Solution = new ArrayList<Integer>(); //FIXME
 	private Integer binMaxCapacity;
 	private Integer numberOfItems;
 	private Integer populationSize = 10; // Par
@@ -115,6 +117,11 @@ public class GeneticAlgorithm {
 		System.out.println("Without Improvement: " + this.generationsWithoutImprovement);
 
 		totalBins = population.get(0).getFitness();
+		
+		if(Best_Solution.isEmpty() == false)
+			Best_Solution.clear();
+		
+		this.Best_Solution.addAll(population.get(0).getChromosome()); //FIXME
 
 		return totalBins;
 	}
@@ -240,7 +247,7 @@ public class GeneticAlgorithm {
 			Individuo parent1 = pair_parents.get(0);
 			Individuo parent2 = pair_parents.get(1);
 			// Usar para mutacao: RELOCATE, SWAP ou TWO_OPT
-			List<Individuo> pair_children = parent1.generateChild(parent2, mutationChance, REALOCATE);
+			List<Individuo> pair_children = parent1.generateChild(parent2, mutationChance,SCRAMBLE ); //FIXME TODO ALTERAR TIPO DE MUTACAO AQUI
 			// Adicionar os filhos gerados a lista final de filhos
 			for (Individuo child : pair_children) {
 				children.add(child);
@@ -320,7 +327,7 @@ public class GeneticAlgorithm {
 		// Para todos os individuos da populacao
 		for (Individuo i : population) {
 			// Calcular o fitness
-			calcFitness(i, NEXT_FIT);
+			calcFitness(i, FIRST_FIT);       			//FIXME TODO AQUI MUDA NEXT/FIRST FIT
 			// Alterar medidas de classificacao
 			if (i.getFitness() < bestFitness) {
 				bestFitness = i.getFitness();
@@ -364,14 +371,14 @@ public class GeneticAlgorithm {
 		}
 		// Avaliar o tempo da geracao, se esta nova ou velha
 		if (generationsWithoutImprovement > 15) {
-			mutationChance += 0.1;
-		} else if (generationsWithoutImprovement > 20) {
-			mutationChance += 0.2;
-		} else if (generationsWithoutImprovement > 25) {
 			mutationChance += 0.3;
+		} else if (generationsWithoutImprovement > 20) {
+			mutationChance += 0.5;
+		} else if (generationsWithoutImprovement > 25) {
+			mutationChance += 0.7;
 		}
 
-		if (generationNumber > 1000 || generationsWithoutImprovement > 50) {
+		if (generationNumber > 2500 || generationsWithoutImprovement > 2000) {   //FIXME TODO AQUI MUDA CONDICAO DE PARADA
 			terminal_condition = READY;
 		}
 
@@ -417,7 +424,11 @@ public class GeneticAlgorithm {
 		return mapItems;
 	}
 	
-		
+	// FIXME
+	public List<Integer> Get_the_Best() {
+		return this.Best_Solution;
+	}
+
 }
 	
 

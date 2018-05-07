@@ -12,9 +12,14 @@ public class Packing {
 
 		int NumBins = 0;
 		List<Integer> BinFreeSpace = new ArrayList<Integer>(Collections.nCopies(numberOfItens, capacidade)); // numberOfItens
-
-		for (int i = 0; i < numberOfItens; i++) {
-
+		
+		if (itens.isEmpty() == false) {
+			BinFreeSpace.set(NumBins, BinFreeSpace.get(NumBins) - itens.get(0));
+			NumBins++;
+		}
+		
+		for (int i = 1; i < numberOfItens; i++) {
+			
 			int j;
 			
 			for (j = 0; j < NumBins; j++) {
@@ -29,11 +34,9 @@ public class Packing {
 			// Se nao houver onde inserir o item[i], acrescenta mais um bin e o insere
 			if (j == NumBins) {
 				NumBins++;
-				BinFreeSpace.set(NumBins, BinFreeSpace.get(NumBins) - itens.get(i));
+				BinFreeSpace.set(j, BinFreeSpace.get(j) - itens.get(i));
 			}
 		}
-		
-		NumBins++;
 		return (NumBins);
 	}
 
@@ -41,7 +44,12 @@ public class Packing {
 		int NumBins = 0;
 		int BinFreeSpace = capacidade;
 
-		for (int i = 0; i < numberOfItens; i++) {
+		if (itens.isEmpty() ==	 false) {
+			BinFreeSpace -= itens.get(0);
+			NumBins++;
+		}
+		
+		for (int i = 1; i < numberOfItens; i++) {
 
 			// Se houver espaco, insere o item[i] no ultimo Bin alocado
 			if (BinFreeSpace >= itens.get(i)) {
@@ -54,8 +62,6 @@ public class Packing {
 				BinFreeSpace = capacidade - itens.get(i);
 			}
 		}
-		
-		NumBins++;
 		return NumBins;
 	}
 
