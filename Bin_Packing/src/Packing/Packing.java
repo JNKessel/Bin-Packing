@@ -39,6 +39,60 @@ public class Packing {
 		}
 		return (NumBins);
 	}
+	
+	public static List<List<Integer>> FirstFit_GN_Saida(List<Integer> itens, int numberOfItens, int capacidade) {
+
+		int NumBins = 0;
+		List<Integer> BinFreeSpace = new ArrayList<Integer>(Collections.nCopies(numberOfItens, capacidade)); // numberOfItens
+		
+		// Variavel que vai guardar os melhores resultados numa matriz de tamanho igual ao numero
+		// de elementos no formato [ [Nbin , item1] , [Nbin , item2] ... ]
+		Integer[][] tuplas = new Integer[numberOfItens][2]; 
+		
+		if (itens.isEmpty() == false) {
+			BinFreeSpace.set(NumBins, BinFreeSpace.get(NumBins) - itens.get(0));
+			NumBins++;
+			tuplas[0][0] = NumBins++;
+			tuplas[0][1] = itens.get(0);
+		}
+		
+		for (int i = 1; i < numberOfItens; i++) {
+			
+			int j;
+			
+			for (j = 0; j < NumBins; j++) {
+
+				// Insere o item[i] no Bin[j], se houver espaco
+				if (BinFreeSpace.get(j) >= itens.get(i)) {
+					BinFreeSpace.set(j, BinFreeSpace.get(j) - itens.get(i));
+					tuplas[i][0] = j+1;
+					tuplas[i][1] = itens.get(i);
+					break;
+				}
+			}
+
+			// Se nao houver onde inserir o item[i], acrescenta mais um bin e o insere
+			if (j == NumBins) {
+				NumBins++;
+				BinFreeSpace.set(j, BinFreeSpace.get(j) - itens.get(i));
+				tuplas[i][0] = j+1;
+				tuplas[i][1] = itens.get(i);
+			}
+		}
+		
+		List<List<Integer>> ListOfCompletedBins = new ArrayList<List<Integer>>();        
+        
+        for(int i=0; i < NumBins; i++) {
+        	//Inicializa todo o ArrayList de ArrayLists
+        	ListOfCompletedBins.add(new ArrayList<Integer>());
+        }
+        for(int i=0; i < tuplas.length; i++) {
+        	int binNUMBER = tuplas[i][0];
+        	int elemento = tuplas[i][1];
+        	ListOfCompletedBins.get(binNUMBER-1).add(elemento);
+        }		
+		return (ListOfCompletedBins);
+	}
 
 	public static int NextFit_GN(List<Integer> itens, int numberOfItens, int capacidade) {
 		int NumBins = 0;
@@ -63,6 +117,53 @@ public class Packing {
 			}
 		}
 		return NumBins;
+	}
+	
+	public static List<List<Integer>> NextFit_GN_Saida(List<Integer> itens, int numberOfItens, int capacidade) {
+		int NumBins = 0;
+		int BinFreeSpace = capacidade;
+
+		// Variavel que vai guardar os melhores resultados numa matriz de tamanho igual ao numero
+		// de elementos no formato [ [Nbin , item1] , [Nbin , item2] ... ]
+		Integer[][] tuplas = new Integer[numberOfItens][2];
+		
+		if (itens.isEmpty() ==	 false) {
+			BinFreeSpace -= itens.get(0);
+			NumBins++;
+			tuplas[0][0] = NumBins;
+			tuplas[0][1] = itens.get(0);
+		}
+		
+		for (int i = 1; i < numberOfItens; i++) {
+
+			// Se houver espaco, insere o item[i] no ultimo Bin alocado
+			if (BinFreeSpace >= itens.get(i)) {
+				BinFreeSpace -= itens.get(i);
+				tuplas[i][0] = NumBins;
+				tuplas[i][1] = itens.get(i);
+			}
+
+			// Se nao houver onde inserir o item[i], acrescenta mais um bin e o insere
+			else {
+				NumBins++;
+				BinFreeSpace = capacidade - itens.get(i);
+				tuplas[i][0] = NumBins;
+				tuplas[i][1] = itens.get(i);
+			}
+		}
+		
+		List<List<Integer>> ListOfCompletedBins = new ArrayList<List<Integer>>();        
+        
+        for(int i=0; i < NumBins; i++) {
+        	//Inicializa todo o ArrayList de ArrayLists
+        	ListOfCompletedBins.add(new ArrayList<Integer>());
+        }
+        for(int i=0; i < tuplas.length; i++) {
+        	int binNUMBER = tuplas[i][0];
+        	int elemento = tuplas[i][1];
+        	ListOfCompletedBins.get(binNUMBER-1).add(elemento);
+        }		
+		return (ListOfCompletedBins);
 	}
 
 	public static List<List<Integer>> FirstFit_LS (List<Integer> items, int binMaxCapacity) {

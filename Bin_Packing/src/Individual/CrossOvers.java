@@ -23,7 +23,6 @@ public class CrossOvers {
 	 */
 	
 	private static List<Integer> PMX (List<Integer> pai1, List<Integer> pai2, int a, int b) {
-//		System.out.println("PMX Inicializacao");
 		int tamanho = pai1.size();
 		List<Integer> filho = new ArrayList<Integer>(); // Filho tem o mesmo tamanho do pai
 		for(int i = 0; i < tamanho; i++) { // Inicializar ArrayList com null (pra poder acessar as posicoes)
@@ -39,7 +38,6 @@ public class CrossOvers {
 		//ArrayList que ira guardar quais valores ja foram inseridos no filho
 		List<String> ValoresInseridos = new ArrayList<String>();
 		
-//		System.out.println("PMX PT1");
 		
 		//Seleciona parte dos elementos do pai1 filho, em suas respectivas posicoes  
 		for(int i=a ; i <= b ; i++) {
@@ -47,10 +45,8 @@ public class CrossOvers {
 			ValoresInseridos.add(pai1_String[i]);
 		}
 		
-//		System.out.println("PMX PT2");
 		//Procura os elementos do pai2 nas mesmas posicoes para tentar inseri-los
 		for(int i=a; i <= b; i++) {
-//			System.out.println("PMX FOR");
 			
 			String Elemento_de_Insercao = pai2_String[i]; //valor do pai2 a ser inserido
 			String Elemento_de_Referencia = pai1_String[i]; //valor do pai1 a ser buscado no pai2
@@ -59,7 +55,6 @@ public class CrossOvers {
 				int j = 0;
 				
 				while(j < tamanho) {
-//				System.out.println("PMX WHILE");
 					
 					//Caso a posicao do elemento do pai1 procurado, seja encontrada no vetor pai2
 					if( Elemento_de_Referencia.equals(pai2_String[j]) == true ) {
@@ -79,10 +74,8 @@ public class CrossOvers {
 					else
 						j++;
 				}
-//				System.out.println("PMX END WHILE");
 			}
 		}
-//		System.out.println("PMX END FOR");
 		
 		//Completa o resto das posicoes vazias com os elementos do pai2
 		for(int i=0; i < tamanho; i++) {  

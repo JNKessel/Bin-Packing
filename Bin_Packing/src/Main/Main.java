@@ -1,9 +1,12 @@
 package Main;
 import GeneticAlgorithm.*;
+import Individual.Mutation;
 import LocalSearch.LocalSearch;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,13 +49,16 @@ public class Main {
 			// Algoritmo Genetico
 			test_totalBins = algoritmo_genetico.naturalSelection(test_data.getItems(),
 					test_data.getBinCapacity(), test_data.getNumberOfItems());
+			List<List<Integer>> Resultado_AG = new ArrayList<List<Integer>>(); 
+			Resultado_AG = algoritmo_genetico.Get_the_Best();
+			System.out.print("Main Solution AG: "+ Resultado_AG + "\n");
+			
 			
 			//Final da contagem de tempo do algoritmo
 			elapsedTime = System.currentTimeMillis() - start;
 			
 			System.out.println("Number of bins = " + test_totalBins);
 			System.out.println("Total time: " + elapsedTime/1000.0 + "s");
-			
 			System.out.println("--- Local Search");
 			
 			// Comeco da contagem de tempo do algoritmo
@@ -66,8 +72,10 @@ public class Main {
 			elapsedTime = System.currentTimeMillis() - start;
 			
 			System.out.println("Number of bins = " + test_totalBins);
-			System.out.println("Total time: " + elapsedTime/1000.0 + "s");
-
+			System.out.println("Total time: " + elapsedTime/1000.0 + "s\n");
+			
+			writeFile(System.getProperty("user.dir") + "/src/OutputFiles/Resultado_" + test, Resultado_AG, test_data.getBinCapacity());
+			Resultado_AG.clear();
 		}
 			
     }
@@ -99,7 +107,7 @@ public class Main {
 		long elapsedTime = System.currentTimeMillis() - start;
 		
 		System.out.println("Number of bins = " + test_totalBins);
-		System.out.println("Total time: " + elapsedTime/1000.0 + "s");
+		System.out.println("Total time: " + elapsedTime/1000.0 + "s\n");
 
     }
    
@@ -123,4 +131,98 @@ public class Main {
     	}
 		return null;
     }
+    
+    public static void writeFile (String file_path, List<List<Integer>> Saida, int binMaxCapacity) {
+    	try {
+            //FIXME Nao estou conseguindo imprimir os arquivos de saida...
+    		FileWriter file = new FileWriter(file_path);
+            BufferedWriter buffer = new BufferedWriter(new FileWriter(file_path));
+
+            buffer.write(Saida.size()); //Number of bins
+            buffer.newLine();
+            buffer.write(binMaxCapacity); //Capacity of bins
+            buffer.newLine();
+            
+            //Itens inside each bin
+            for(List BIN : Saida) {
+            	for(int i=0; i < BIN.size(); i++) {
+            		buffer.write((int) BIN.get(i));
+            		buffer.write(" ");
+            	}
+            	buffer.newLine();
+	        }
+            buffer.close();
+        }
+        catch(IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 }
+
+
+//
+////Rodar testes
+//		for (String test: test_files) {
+//			// Ler arquivo de teste para coletar informacoes
+//			FileData test_data = readFile(System.getProperty("user.dir") + "/src/SourceFiles/" + test);
+//			
+//			System.out.println("Number of items: " + test_data.getNumberOfItems());
+//			System.out.println("Bin Maximum Capacity: " + test_data.getBinCapacity());
+//			System.out.println("Items: " + test_data.getItems());
+//			
+//			//TODO REMOVER DAQUI
+//			Integer numberOfItems = test_data.getNumberOfItems();
+//			binCap = test_data.getBinCapacity();
+//			List<Integer> items = new ArrayList<Integer>();
+//			items = test_data.getItems();
+//			//TODO ATE AQUI
+//
+//			System.out.println("--- Genetic Algorithm");
+//
+//			// Comeco da contagem de tempo do algoritmo
+//			long start1 = System.currentTimeMillis();
+//			
+//			// Algoritmo Genetico
+//			test_totalBins = algoritmo_genetico.naturalSelection(test_data.getItems(),
+//					test_data.getBinCapacity(), test_data.getNumberOfItems());
+//			
+//			//TODO REMOVER DAQUI
+//			List<Integer> daBEST = new ArrayList<Integer>();
+//			daBEST = algoritmo_genetico.Get_the_Best();
+//			System.out.println("MELHOR:");
+//			System.out.println(daBEST);
+//			Integer[][] melhor = new Integer[test_totalBins][];
+//																			//FIXME TODO mudar pra NEXTFIT / FIRSTFIT AQUI
+//			melhor = Packing.FirstFit_GN_Saida(daBEST,numberOfItems,binCap);
+//			
+//	        List<List<Integer>> Padrao_de_saida = new ArrayList<List<Integer>>();
+//	        
+//	        
+//	        
+//	        for(int i=0; i < test_totalBins; i++) {
+//	        	//Inicializa toda a Lista de ArrayLists
+//	        	Padrao_de_saida.add(new ArrayList<Integer>());
+//	        }
+//	        for(int i=0; i < melhor.length; i++) {
+//	        	int binNUMBER = melhor[i][0];
+//	        	int elemento = melhor[i][1];
+//	        	Padrao_de_saida.get(binNUMBER-1).add(elemento);
+//	        }	
+//	        
+//	        writeFile(System.getProperty("user.dir") + "/src/OutputFiles/Fk_t120_00.txt", Padrao_de_saida, binCap);
+//	        
+//	        for(int i=0; i < melhor.length; i++) {
+//	        	melhor[i] = null;	        	
+//	        }
+//	        Padrao_de_saida.clear();
+//			//TODO ATE AQUI
+//			
+//			//Final da contagem de tempo do algoritmo
+//			long elapsedTime1 = System.currentTimeMillis() - start1;
+//			
+//			System.out.println("Number of bins = " + test_totalBins);
+//			System.out.println("Total time: " + elapsedTime1/1000.0 + "s\n\n");
+//		}
+//			
+// }

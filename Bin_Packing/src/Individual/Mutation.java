@@ -45,20 +45,22 @@ public class Mutation {
 	public static List<Integer> Scramble(List<Integer> pai) {
 
 		int tam = pai.size();
-		RandomIntervalo(tam);
 		List<Integer> res = new ArrayList<Integer>(pai);
 
-		int n = 15;
-				
-		for(int i=0; i < n; i++) {
-			int ri1 = ThreadLocalRandom.current().nextInt(r1, r2+1);
-			int ri2 = ThreadLocalRandom.current().nextInt(r1, r2+1);
-			
-			int aux = res.get(ri1);
-			res.set(ri1, res.get(ri2));
-			res.set(ri2, aux);
-		}
+		int Nj = 1; //Melhor solucao do primeiro arquivo ate agora foi com Nj = 1 e Ni = 15 //FIXME TODO
+		int Ni = 15;
 		
+		for(int j=0; j < Nj; j++) {
+			RandomIntervalo(tam);
+			for(int i=0; i < Ni; i++) {
+				int ri1 = ThreadLocalRandom.current().nextInt(r1, r2+1);
+				int ri2 = ThreadLocalRandom.current().nextInt(r1, r2+1);
+				
+				int aux = res.get(ri1);
+				res.set(ri1, res.get(ri2));
+				res.set(ri2, aux);
+			}
+		}
 		return res;
 	}
 	

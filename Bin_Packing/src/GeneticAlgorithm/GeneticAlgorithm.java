@@ -24,7 +24,7 @@ public class GeneticAlgorithm {
 	private Integer terminal_condition = NOT_READY;
 	private Integer totalBins;
 	private List<Integer> items;
-	private List<Integer> Best_Solution = new ArrayList<Integer>(); //FIXME
+	private List<List<Integer>> ListOfCompletedBins = new ArrayList<List<Integer>>(); //FIXME
 	private Integer binMaxCapacity;
 	private Integer numberOfItems;
 	private Integer populationSize = 10; // Par
@@ -47,7 +47,7 @@ public class GeneticAlgorithm {
 		this.numberOfItems = numberOfItems;
 		
 		Hash_Items(initial_items);
-
+		
 		// Garantir que o tamanho da população não é maior que o número total de
 		// soluções (Fatorial(numberOfItems))
 		if (numberOfItems < 4) { // 4 é o menor número para o qual Fatorial(numero) > 10 (tamanho da populacao)
@@ -106,9 +106,10 @@ public class GeneticAlgorithm {
 			// System.out.println("CONDICAO TERMINAL:" + terminal_condition);
 		}
 
-		for (Individuo i : population) {
-			System.out.println("Chromossome: " + i.getChromosome() + "   " + "Fitness: " + i.getFitness());
-		}
+//		for (Individuo i : population) {
+//			System.out.println("Chromossome: " + i.getChromosome() + "   " + "Fitness: " + i.getFitness());
+//		}
+		//FIXME TODO Tirei o print dos chromosomes porque agora que a gente ja tem como ver o resultado pela lista de listas....
 
 		System.out.println("Average: " + this.generationsAverage);
 		System.out.println("Best: " + this.generationsBest);
@@ -118,10 +119,19 @@ public class GeneticAlgorithm {
 
 		totalBins = population.get(0).getFitness();
 		
-		if(Best_Solution.isEmpty() == false)
-			Best_Solution.clear();
+		if(ListOfCompletedBins.isEmpty() == false)
+			ListOfCompletedBins.clear();
 		
-		this.Best_Solution.addAll(population.get(0).getChromosome()); //FIXME
+		ArrayList<Integer> Best_Solution = new ArrayList<Integer>();
+		Best_Solution.addAll(population.get(0).getChromosome());
+		
+		if(terminal_condition == READY) {
+			//FIXME OBS: Nao sei se voces preferem deixar assim ou botar isso em outro lugar. Ou poderiamos
+			// retornar a List<List<Integer>> ListOfCompletedBins ao inves do totalBins, já que o numero 
+			//de bins é o tamanho do ListOfCompletedBins. E se quiserem adicionar uma variavel para verificar
+			//se estamos usando nextfit ou firstfit
+			ListOfCompletedBins = Packing.FirstFit_GN_Saida(Best_Solution, Best_Solution.size(), binMaxCapacity);
+		}
 
 		return totalBins;
 	}
@@ -425,8 +435,8 @@ public class GeneticAlgorithm {
 	}
 	
 	// FIXME
-	public List<Integer> Get_the_Best() {
-		return this.Best_Solution;
+	public List<List<Integer>> Get_the_Best() {
+		return this.ListOfCompletedBins;
 	}
 
 }
