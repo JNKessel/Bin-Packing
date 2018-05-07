@@ -112,7 +112,7 @@ public class Vizinhancas {
 	
 	public static List<List<Integer>> exchange2_B(List<List<Integer>> solucao, Integer binMaxCapacity){
 		int itemsNum[];
-		int binNum, item1, item2, i;
+		int item1, item2;
 
 		List<List<Integer>> res = Packing.cloneStructure(solucao);
 		List<List<Integer>> solucao_aux = Packing.cloneStructure(solucao);
@@ -200,7 +200,7 @@ public class Vizinhancas {
 	
 	public static List<List<Integer>> exchange2_C(List<List<Integer>> solucao, Integer binMaxCapacity){
 		int itemsNum[];
-		int binNum, item1, item2, i;
+		int item1, item2;
 
 		List<List<Integer>> res = Packing.cloneStructure(solucao);
 		List<List<Integer>> solucao_aux = Packing.cloneStructure(solucao);
@@ -263,8 +263,6 @@ public class Vizinhancas {
 	}
 	
 	public static List<List<Integer>> shake(List<List<Integer>> solucao, Integer binMaxCapacity){
-		int itemNum, item, i, item2Num, j;
-		
 		List<List<Integer>> res = Packing.cloneStructure(solucao);
 		Boolean foundBin = false;
 		Random random = new Random();
@@ -319,7 +317,6 @@ public class Vizinhancas {
 	public static List<List<Integer>> restructure(List<List<Integer>> solucao, Integer binMaxCapacity){
 		
 		List<List<Integer>> res = Packing.cloneStructure(solucao);
-		Random random = new Random();
 		List<Integer> binMoreFreeSpace = new ArrayList<Integer>();;
 		Integer weightBinMoreFreeSpace = Integer.MAX_VALUE;
 		List<Integer> remainingItems = new ArrayList<Integer>();

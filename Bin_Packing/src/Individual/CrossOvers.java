@@ -94,7 +94,6 @@ public class CrossOvers {
 	 * garantimos que nao havera problemas com itens duplicados durante as recombinacoes
 	 */
 	
-	//TODO BREAK POINT
 	public static String[] ConvertToString(HashMap<String, Integer> hash_map, List<Integer> parent) {
 		
 		int tamanho = hash_map.size();

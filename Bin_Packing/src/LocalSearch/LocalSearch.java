@@ -3,9 +3,7 @@ package LocalSearch;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import Packing.Packing;
 
@@ -15,6 +13,7 @@ public class LocalSearch {
 	private List<Integer> items;
 	private Integer binMaxCapacity;
 	private Integer numberOfItems;
+	private Integer cost = 0;
 	
 	private Integer READY = 1;
 	private Integer NOT_READY = 0;
@@ -47,11 +46,16 @@ public class LocalSearch {
 		return totalBins;
 	}
 	
+	public List<List<Integer>> getMainSolution () {
+		return main_solution;
+	}
+	
 	private void generateInitialSolution() {
 		// Ordenar os itens inicias em ordem decrescente de peso
 		Collections.sort(items, Collections.reverseOrder());
 		// Gerar uma solu��o inicial com FirstFit
 		main_solution = Packing.FirstFit_LS(items, this.binMaxCapacity);
+		cost += 1;
 	}
 	
 	private void applyNeighborhood() {
@@ -124,10 +128,15 @@ public class LocalSearch {
 			terminal_condition = READY;
 			totalBins = main_solution.size();
 		} else {
+			cost += 1;
 			// Sen�o, a solu��o atual � atualizada para o melhor vizinho e a busca continua
 			main_solution = bestSolution;
 			totalBins = main_solution.size();
 		}
+	}
+	
+	public Integer getCost () {
+		return cost;
 	}
 	
 	// Compara o numero de bins dos individuos

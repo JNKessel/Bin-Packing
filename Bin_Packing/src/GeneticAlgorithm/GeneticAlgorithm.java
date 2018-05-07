@@ -57,65 +57,26 @@ public class GeneticAlgorithm {
 		List<Individuo> families;
 		List<Individuo> population;
 
-		// System.out.println("Primeira Geração:");
-
 		// Gera população inicial de individuos
 		population = firstGeneration(this.items);
-
-		// for(Individuo i: population) {
-		// System.out.println(i.getChromosome());
-		// }
-
-		// System.out.println("Classificação:");
-
 		// Classificar geracao
 		classifyGeneration(population, true);
 
-		// System.out.println("Average: " + this.generationsAverage);
-		// System.out.println("Best: " + this.generationsBest);
-		// System.out.println("Worse: " + this.generationsWorst);
-
 		while (terminal_condition != READY) {
-			// System.out.println("Familias:");
-
 			// Selecionar pais e gerar filhos
 			families = generateFamilies(population);
-
-			// for(Individuo i: families) {
-			// System.out.println(i.getChromosome());
-			// }
-
-			// System.out.println("Classificação:");
-
 			// Classificar geracao
 			classifyGeneration(families, false);
-
-			// System.out.println("Average: " + this.generationsAverage);
-			// System.out.println("Best: " + this.generationsBest);
-			// System.out.println("Worse: " + this.generationsWorst);
-
-			// System.out.println("Próxima Geração:");
-
 			// Selecionar individuos para a próxima geração
 			population = nextGeneration(families);
-
-			// for(Individuo i: population) {
-			// System.out.println(i.getChromosome());
-			// }
-
-			// System.out.println("CONDICAO TERMINAL:" + terminal_condition);
 		}
 
-//		for (Individuo i : population) {
-//			System.out.println("Chromossome: " + i.getChromosome() + "   " + "Fitness: " + i.getFitness());
-//		}
-		//FIXME TODO Tirei o print dos chromosomes porque agora que a gente ja tem como ver o resultado pela lista de listas....
-
-		System.out.println("Average: " + this.generationsAverage);
-		System.out.println("Best: " + this.generationsBest);
-		System.out.println("Worse: " + this.generationsWorst);
-		System.out.println("Total Generations: " + this.generationNumber);
-		System.out.println("Without Improvement: " + this.generationsWithoutImprovement);
+		// Parametros de Avaliação do Algoritmo
+//		System.out.println("Average: " + this.generationsAverage);
+//		System.out.println("Best: " + this.generationsBest);
+//		System.out.println("Worse: " + this.generationsWorst);
+//		System.out.println("Total Generations: " + this.generationNumber);
+//		System.out.println("Without Improvement: " + this.generationsWithoutImprovement);
 
 		totalBins = population.get(0).getFitness();
 		
@@ -126,14 +87,14 @@ public class GeneticAlgorithm {
 		Best_Solution.addAll(population.get(0).getChromosome());
 		
 		if(terminal_condition == READY) {
-			//FIXME OBS: Nao sei se voces preferem deixar assim ou botar isso em outro lugar. Ou poderiamos
-			// retornar a List<List<Integer>> ListOfCompletedBins ao inves do totalBins, já que o numero 
-			//de bins é o tamanho do ListOfCompletedBins. E se quiserem adicionar uma variavel para verificar
-			//se estamos usando nextfit ou firstfit
 			ListOfCompletedBins = Packing.FirstFit_GN_Saida(Best_Solution, Best_Solution.size(), binMaxCapacity);
 		}
 
 		return totalBins;
+	}
+	
+	public Integer totalGenerations() {
+		return generationNumber;
 	}
 
 	private List<Individuo> firstGeneration(List<Integer> initial_items) {
@@ -198,17 +159,11 @@ public class GeneticAlgorithm {
 
 	
 	private List<Individuo> generateFamilies(List<Individuo> old_population) {
-		// System.out.println("Selecionar Pais");
-
 		// Selecionar pais
 		List<List<Individuo>> population_parents = selectParents(old_population);
 
-		// System.out.println("Gerar Filhos");
-
 		// Recombinar pais para gerar filhos
 		List<Individuo> population_sons = generateChildren(population_parents);
-
-		// System.out.println("Juntar Pais e Filhos");
 
 		// Formar familias (juntar uma lista de individuos com pais e filhos)
 		List<Individuo> families = joinParentsChildren(old_population, population_sons);
@@ -257,7 +212,7 @@ public class GeneticAlgorithm {
 			Individuo parent1 = pair_parents.get(0);
 			Individuo parent2 = pair_parents.get(1);
 			// Usar para mutacao: RELOCATE, SWAP ou TWO_OPT
-			List<Individuo> pair_children = parent1.generateChild(parent2, mutationChance,SCRAMBLE ); //FIXME TODO ALTERAR TIPO DE MUTACAO AQUI
+			List<Individuo> pair_children = parent1.generateChild(parent2, mutationChance, SCRAMBLE );
 			// Adicionar os filhos gerados a lista final de filhos
 			for (Individuo child : pair_children) {
 				children.add(child);
@@ -337,7 +292,7 @@ public class GeneticAlgorithm {
 		// Para todos os individuos da populacao
 		for (Individuo i : population) {
 			// Calcular o fitness
-			calcFitness(i, FIRST_FIT);       			//FIXME TODO AQUI MUDA NEXT/FIRST FIT
+			calcFitness(i, FIRST_FIT);
 			// Alterar medidas de classificacao
 			if (i.getFitness() < bestFitness) {
 				bestFitness = i.getFitness();
@@ -420,9 +375,6 @@ public class GeneticAlgorithm {
 	}
 	
 	public void Hash_Items(List<Integer> parent) {
-
-		//HashMap<String, Integer> mapItems = new HashMap<String, Integer>();
-		
 		// Associa cada valor dos elementos do pai a uma string atraves de um hashmap. A string eh 
 		// representada por "N" seguido de um sufixo, sendo este, um valor inteiro de 1 ate o tamanho do pai
 		for(int i=0; i < parent.size(); i++) {
@@ -434,31 +386,9 @@ public class GeneticAlgorithm {
 		return mapItems;
 	}
 	
-	// FIXME
 	public List<List<Integer>> Get_the_Best() {
 		return this.ListOfCompletedBins;
 	}
 
 }
-	
-
-	// public static void main(String[] args) {
-	// System.out.println(((Integer) 1).compareTo((Integer) 2));
-	// System.out.println("Hello There!");
-	// List<Integer> list = new ArrayList<Integer>();
-	// list.add(7);
-	// list.add(1);
-	// list.add(10);
-	// list.add(2);
-	// list.add(6);
-	// System.out.println(list);
-	// System.out.println(list.get(0));
-	// while(list.size() != 0) {
-	// Random random = new Random();
-	// Integer parent = list.get(random.nextInt(list.size()));
-	// list.remove(parent);
-	// System.out.println(parent);
-	// System.out.println(list);
-	// }
-	// }
 

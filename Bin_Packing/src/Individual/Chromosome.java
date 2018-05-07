@@ -29,6 +29,8 @@ public class Chromosome {
 			chromosome = (Mutation.Swap(chromosome));
 		}else if(type == 3){
 			chromosome = (Mutation.Two_Opt(chromosome));
+		}else if(type == 4) {
+			chromosome = (Mutation.Scramble(chromosome));
 		}
 	}
 	
