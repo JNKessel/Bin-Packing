@@ -143,6 +143,7 @@ A ideia é aumentar a probabilidade de mutação a medida que nos aproximamos de
 1.2.4.4	Condição de Parada
 
 A condição de parada do algoritmo é o número de gerações sem melhoria de melhor fitness ser maior que 50 ou o número de gerações ultrapassar 1000.
+
 1.2.5	Próxima Geração
 A próxima geração é formada selecionando-se metade dos melhores indivíduos do conjunto de famílias. Os melhores indivíduos, são os que tem melhor fitness. Assim se gera uma nova população sempre se mantendo o número de “m” indivíduos.
 
