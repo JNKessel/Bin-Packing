@@ -5,6 +5,7 @@ import LocalSearch.LocalSearch;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -74,7 +75,7 @@ public class Main {
 			System.out.println("Number of bins = " + test_totalBins);
 			System.out.println("Total time: " + elapsedTime/1000.0 + "s\n");
 			
-			writeFile(System.getProperty("user.dir") + "/src/OutputFiles/Resultado_" + test, Resultado_AG, test_data.getBinCapacity());
+			writeFile(System.getProperty("user.dir") + "/src/Resultado_" + test, Resultado_AG, test_data.getBinCapacity());
 			Resultado_AG.clear();
 		}
 			
@@ -135,18 +136,20 @@ public class Main {
     public static void writeFile (String file_path, List<List<Integer>> Saida, int binMaxCapacity) {
     	try {
             //FIXME Nao estou conseguindo imprimir os arquivos de saida...
-    		FileWriter file = new FileWriter(file_path);
+    		File arquivo = new File(file_path);
+    		arquivo.createNewFile();
+    		FileWriter file = new FileWriter(arquivo);
             BufferedWriter buffer = new BufferedWriter(new FileWriter(file_path));
 
-            buffer.write(Saida.size()); //Number of bins
+            buffer.write(String.valueOf(Saida.size())); //Number of bins
             buffer.newLine();
-            buffer.write(binMaxCapacity); //Capacity of bins
+            buffer.write(String.valueOf(binMaxCapacity)); //Capacity of bins
             buffer.newLine();
             
             //Itens inside each bin
             for(List BIN : Saida) {
             	for(int i=0; i < BIN.size(); i++) {
-            		buffer.write((int) BIN.get(i));
+            		buffer.write(String.valueOf((int) BIN.get(i)));
             		buffer.write(" ");
             	}
             	buffer.newLine();
