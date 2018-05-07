@@ -185,9 +185,7 @@ public class CrossOvers {
 	public void ParcialmenteMapeado(List<Integer> pai1, List<Integer> pai2) {
 		
 		RandomIntervalo (pai1.size()); //Para cada Crossover cria um novo intervalo
-		// System.out.println("PMX F1");
 		filho1 = PMX(pai1, pai2, this.intervaloMin, this.intervaloMax);
-		// System.out.println("PMX F2");
 		filho2 = PMX(pai2, pai1, this.intervaloMin, this.intervaloMax);
 	}
 	

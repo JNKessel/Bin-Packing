@@ -31,6 +31,7 @@ public class Main {
         
 		// Rodar testes
 		for (String test: test_files) {
+			System.out.println("Running test: " + test);
 			// Ler arquivo de teste para coletar informacoes
 			FileData test_data = readFile(System.getProperty("user.dir") + "/src/SourceFiles/" + test);
 
@@ -67,6 +68,8 @@ public class Main {
 
 			Resultado_AG.clear();
 		}
+		
+		System.out.println("End of tests");
 			
     }
        
@@ -110,15 +113,22 @@ public class Main {
             buffer.newLine();
             buffer.write("Conteúdo dos bins");
             buffer.newLine();
-            
-            //Itens inside each bin
-            for(List<Integer> BIN : saida_AG) {
-            	for(int i=0; i < BIN.size(); i++) {
-            		buffer.write(String.valueOf((int) BIN.get(i)));
-            		buffer.write(" ");
-            	}
-            	buffer.newLine();
-	        }
+                        
+			// Itens inside each bin
+			int binNUMBER = 1;
+
+			for (List<Integer> BIN : saida_AG) {
+				if (binNUMBER < 100)
+					buffer.write(String.valueOf("Bin #" + (binNUMBER) + "\t\t"));
+				else
+					buffer.write(String.valueOf("Bin #" + (binNUMBER) + "\t"));
+				for (int i = 0; i < BIN.size(); i++) {
+					buffer.write(String.valueOf((int) BIN.get(i)));
+					buffer.write(" ");
+				}
+				buffer.newLine();
+				binNUMBER++;
+			}
 
             buffer.newLine();
             buffer.write("--- Busca Local");
@@ -132,14 +142,21 @@ public class Main {
             buffer.write("Conteúdo dos bins");
             buffer.newLine();
             
-            //Itens inside each bin
-            for(List<Integer> BIN : saida_BL) {
-            	for(int i=0; i < BIN.size(); i++) {
-            		buffer.write(String.valueOf((int) BIN.get(i)));
-            		buffer.write(" ");
-            	}
-            	buffer.newLine();
-	        }
+			// Itens inside each bin
+			binNUMBER = 1;
+
+			for (List<Integer> BIN : saida_BL) {
+				if (binNUMBER < 100)
+					buffer.write(String.valueOf("Bin #" + (binNUMBER) + "\t\t"));
+				else
+					buffer.write(String.valueOf("Bin #" + (binNUMBER) + "\t"));
+				for (int i = 0; i < BIN.size(); i++) {
+					buffer.write(String.valueOf((int) BIN.get(i)));
+					buffer.write(" ");
+				}
+				buffer.newLine();
+				binNUMBER++;
+			}
             
             buffer.close();
         }

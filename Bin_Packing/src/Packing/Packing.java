@@ -284,22 +284,4 @@ public class Packing {
 	    }
 	}
 	
-//	public static void main(String[] args) {
-//		List<List<Integer>> solution = new ArrayList<List<Integer>>();
-//		List<Integer> list = new ArrayList<Integer>();
-//		list.add(5);
-//		list.add(4);
-//		List<Integer> list1 = new ArrayList<Integer>();
-//		list1.add(3);
-//		list1.add(3);
-//		List<Integer> list2 = new ArrayList<Integer>();
-//		list2.add(2);
-//		solution.add(list);
-//		solution.add(list1);
-//		solution.add(list2);
-//		System.out.println(solution);
-//		List<List<Integer>> resposta = Realocate_LS(solution, 10);
-//		System.out.println(resposta);
-//	}
-
 }
